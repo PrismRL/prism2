@@ -1,0 +1,2482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="generator" content="mkdocs-1.6.1, mkdocs-terminal-4.7.0">
+     
+     
+    <link rel="icon" type="image/png" sizes="192x192" href="../img/android-chrome-192x192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="../img/android-chrome-512x512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png" />
+<link rel="shortcut icon" type="image/png" sizes="48x48" href="../img/favicon.ico" />
+<link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32x32.png" />
+
+
+    
+ 
+<title>Part 01 - PRISM: A ROGUELIKE ENGINE</title>
+
+
+<link href="../css/fontawesome/css/fontawesome.min.css" rel="stylesheet">
+<link href="../css/fontawesome/css/solid.min.css" rel="stylesheet">
+<link href="../css/normalize.css" rel="stylesheet">
+<link href="../css/terminal.css" rel="stylesheet">
+<link href="../css/theme.css" rel="stylesheet">
+<link href="../css/theme.tile_grid.css" rel="stylesheet">
+<link href="../css/theme.footer.css" rel="stylesheet">
+<!-- default color palette -->
+<link href="../css/palettes/default.css" rel="stylesheet">
+
+<!-- page layout -->
+<style>
+/* initially set page layout to a one column grid */
+.terminal-mkdocs-main-grid {
+    display: grid;
+    grid-column-gap: 1.4em;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+}
+
+/*  
+*   when side navigation is not hidden, use a two column grid.  
+*   if the screen is too narrow, fall back to the initial one column grid layout.
+*   in this case the main content will be placed under the navigation panel. 
+*/
+@media only screen and (min-width: 70em) {
+    .terminal-mkdocs-main-grid {
+        grid-template-columns: 4fr 9fr;
+    }
+}</style>
+
+
+
+     
+    
+    
+
+    
+    <!-- search css support -->
+<link href="../css/search/bootstrap-modal.css" rel="stylesheet">
+<!-- search scripts -->
+<script>
+    var base_url = "..",
+    shortcuts = "{}";
+</script>
+<script src="../js/jquery/jquery-1.10.1.min.js" defer></script>
+<script src="../js/bootstrap/bootstrap.min.js" defer></script>
+<script src="../js/mkdocs/base.js" defer></script>
+    
+    
+    
+    
+    <script src="../search/main.js"></script>
+    
+
+    
+</head>
+
+<body class="terminal"><div class="container">
+    <div class="terminal-nav">
+        <header class="terminal-logo">
+            <div id="mkdocs-terminal-site-name" class="logo terminal-prompt"><a href="/" class="no-style">PRISM: A ROGUELIKE ENGINE</a></div>
+        </header>
+        
+        <nav class="terminal-menu">
+            
+            <ul vocab="https://schema.org/" typeof="BreadcrumbList">
+                
+                
+                <li property="itemListElement" typeof="ListItem">
+                    <a href=".." class="menu-item " property="item" typeof="WebPage">
+                        <span property="name">Home</span>
+                    </a>
+                    <meta property="position" content="0">
+                </li>
+                
+                
+                <li property="itemListElement" typeof="ListItem">
+                    <a href="../doc/" class="menu-item " property="item" typeof="WebPage">
+                        <span property="name">Documentation</span>
+                    </a>
+                    <meta property="position" content="1">
+                </li>
+                
+                
+                <li property="itemListElement" typeof="ListItem">
+                    <a href="../architecture-primer/" class="menu-item " property="item" typeof="WebPage">
+                        <span property="name">Architecture Primer</span>
+                    </a>
+                    <meta property="position" content="2">
+                </li>
+                
+                
+                
+                
+                
+                    
+                    
+
+
+<li property="itemListElement" typeof="ListItem">
+    <a href="#" class="menu-item" data-toggle="modal" data-target="#mkdocs_search_modal" property="item" typeof="SearchAction">
+        <i aria-hidden="true" class="fa fa-search"></i> <span property="name">Search</span>
+    </a>
+    <meta property="position" content="3">
+</li>
+                    
+            </ul>
+            
+        </nav>
+    </div>
+</div>
+        
+    <div class="container">
+        <div class="terminal-mkdocs-main-grid"><aside id="terminal-mkdocs-side-panel"><nav>
+  
+    <ul class="terminal-mkdocs-side-nav-items">
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="..">Home</a>
+        
+    
+    
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../doc/">Documentation</a>
+        
+    
+    
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../architecture-primer/">Architecture Primer</a>
+        
+    
+    
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+        
+        
+
+        
+            
+    
+        
+        <span class="
+        
+    
+
+    terminal-mkdocs-side-nav-item--active terminal-mkdocs-side-nav-section-no-index">Making a roguelike</span>
+    
+    
+        
+      
+        
+            <ul class="terminal-mkdocs-side-nav-li-ul">
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        <span class="
+
+    terminal-mkdocs-side-nav-item--active">Part 01</span>
+    
+    </li>
+            
+            
+    </ul>
+        
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+        
+        
+
+        
+            
+    
+        
+        
+            
+            
+            <span class="
+        
+    
+
+    terminal-mkdocs-side-nav-item terminal-mkdocs-side-nav-section-no-index">API</span>
+        
+    
+    
+        
+      
+        
+            <ul class="terminal-mkdocs-side-nav-li-ul">
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/action/">action</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/actiondecision/">actiondecision</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/actionmessage/">actionmessage</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/actor/">actor</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/actorstorage/">actorstorage</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/arg/">arg</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/assert/">assert</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/bitmaskbuffer/">bitmaskbuffer</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/boolean/">boolean</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/booleanbuffer/">booleanbuffer</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/boundingbox/">boundingbox</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/btconditional/">btconditional</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/btnode/">btnode</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/btroot/">btroot</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/btselector/">btselector</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/btsequence/">btsequence</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/btsucceeder/">btsucceeder</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/button/">button</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/buttonprops/">buttonprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/camera/">camera</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/cell/">cell</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/collectgarbage/">collectgarbage</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/collidercomponent/">collidercomponent</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/collideroptions/">collideroptions</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/collisionmask/">collisionmask</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/color4/">color4</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/component/">component</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/controllercomponent/">controllercomponent</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/coroutine/">coroutine</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/coroutinelib/">coroutinelib</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/debug/">debug</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/debuginfo/">debuginfo</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/debuglib/">debuglib</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/debugmessage/">debugmessage</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/decision/">decision</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/display/">display</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/distancetype/">distancetype</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/dofile/">dofile</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/drawablecomponent/">drawablecomponent</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/editor/">editor</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/editorgrid/">editorgrid</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/editorgridinit/">editorgridinit</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/editorgridprops/">editorgridprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/editorroot/">editorroot</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/editorrootprops/">editorrootprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/editorstate/">editorstate</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/ellipsemodification/">ellipsemodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/ellipsetool/">ellipsetool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/erasemodification/">erasemodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/erasetool/">erasetool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/filepanel/">filepanel</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/filepanelinit/">filepanelinit</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/filepanelprops/">filepanelprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/filetype/">filetype</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/fill/">fill</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/fraction/">fraction</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/function/">function</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/gamestate/">gamestate</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/gamestatemanager/">gamestatemanager</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/geometer/">geometer</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/grid/">grid</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/ibehavior/">ibehavior</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/keybinding/">keybinding</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/level/">level</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/levelstate/">levelstate</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/linemodification/">linemodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/linetool/">linetool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/map/">map</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/mapbuilder/">mapbuilder</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/mapgeneratorstate/">mapgeneratorstate</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/message/">message</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/modification/">modification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/neighborhood/">neighborhood</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/object/">object</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/opaquecomponent/">opaquecomponent</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/pastemodification/">pastemodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/penmodification/">penmodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/pentool/">pentool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/placeable/">placeable</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/playercontrollercomponent/">playercontrollercomponent</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/prefabeditorstate/">prefabeditorstate</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/priorityqueue/">priorityqueue</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/prism/">prism</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/quadrant/">quadrant</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/queue/">queue</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/rectmodification/">rectmodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/recttool/">recttool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/rng/">rng</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/row/">row</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/scheduler/">scheduler</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/selectiongrid/">selectiongrid</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/selectiongridinit/">selectiongridinit</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/selectiongridprops/">selectiongridprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/selectionpanel/">selectionpanel</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/selectionpanelinit/">selectionpanelinit</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/selectionpanelprops/">selectionpanelprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/selecttool/">selecttool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/sensescomponent/">sensescomponent</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/sensessystem/">sensessystem</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/sensestracker/">sensestracker</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/simplescheduler/">simplescheduler</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/sparsearray/">sparsearray</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/sparsegrid/">sparsegrid</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/sparsemap/">sparsemap</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/spectrum/">spectrum</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/spectrumattachable/">spectrumattachable</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/spriteatlas/">spriteatlas</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/system/">system</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/systemmanager/">systemmanager</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/target/">target</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/textinput/">textinput</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/textinputinit/">textinputinit</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/textinputprops/">textinputprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/tileelement/">tileelement</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/tileelementprops/">tileelementprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/tool/">tool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/tools/">tools</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/toolsprops/">toolsprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/unfloatselectionmodification/">unfloatselectionmodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../api/vector2/">vector2</a>
+        
+    
+    </li>
+            
+            
+    </ul>
+        
+    
+  </li>
+        
+    </ul>
+  
+</nav><hr>
+<nav>
+    <ul>
+        <li><a href="#getting-started-with-love-2d">Getting Started with LÖVE 2D</a></li>
+        <li><a href="#installation">Installation</a></li><li><a href="#running-the-template">Running the Template</a></li><li><a href="#creating-an-enemy">Creating an Enemy</a></li>
+        <li><a href="#adding-the-kobold-actor">Adding the Kobold Actor</a></li><li><a href="#the-kobold-controller">The Kobold Controller</a></li><li><a href="#adding-a-player-tag">Adding a Player Tag</a></li><li><a href="#kicking-kobolds">Kicking Kobolds</a></li>
+        
+    </ul>
+</nav>
+</aside>
+            <main id="terminal-mkdocs-main-content">
+<section id="mkdocs-terminal-content">
+    <h1 id="getting-started-with-love-2d">Getting Started with LÖVE 2D</h1>
+<h2 id="installation">Installation</h2>
+<p>To begin, download and install LÖVE 2D from <a href="https://love2d.org/">https://love2d.org/</a>. If you are using Linux, LÖVE is often available through your distribution's package manager.</p>
+<h2 id="running-the-template">Running the Template</h2>
+<ol>
+<li>Download the provided zipped release template and extract its contents.</li>
+<li>Run the project by:</li>
+<li>Dragging the folder containing <code>main.lua</code> onto the LÖVE executable.</li>
+<li>Navigating to the project folder in a terminal and executing:
+     <div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>love<span style="color: #BBB"> </span>.
+</code></pre></div></li>
+</ol>
+<p>Upon launching, you should see an <code>@</code> symbol on the screen. You can move this character using the following default keys:
+- <code>WASD</code> for movement
+- <code>QEZC</code> for diagonal movement</p>
+<p>These key bindings can be modified in <code>keymapschema.lua</code>, included in the template.</p>
+<hr />
+<h1 id="creating-an-enemy">Creating an Enemy</h1>
+<p>To make the game more engaging, let's introduce an enemy: the <strong>Kobold</strong>.</p>
+<h2 id="adding-the-kobold-actor">Adding the Kobold Actor</h2>
+<ol>
+<li>Navigate to the <code>/modules/MyGame/actors/</code> directory.</li>
+<li>Create a new file named <code>kobold.lua</code>.</li>
+<li>Add the following code to define the Kobold actor:</li>
+</ol>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-style: italic">--- @class Kobold : Actor</span>
+<span style="color: #2C2CFF">local</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Kobold</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">prism</span>.Actor:<span style="font-weight: bold; font-style: italic">extend</span>(<span style="color: #800080">&quot;Kobold&quot;</span>)
+<span style="color: #2C2CFF; font-weight: bold">Kobold</span>.name<span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #800080">&quot;Kobold&quot;</span>
+
+<span style="color: #353580; font-weight: bold">function</span><span style="color: #BBB"> </span>Kobold:<span style="font-weight: bold; font-style: italic">initialize</span>()
+<span style="color: #BBB">    </span><span style="color: #353580; font-weight: bold">return</span><span style="color: #BBB"> </span>{
+<span style="color: #BBB">        </span><span style="color: #080; font-style: italic">-- Defines the drawable appearance of the Kobold.</span>
+<span style="color: #BBB">        </span><span style="color: #080; font-style: italic">-- Each index corresponds to a character byte + 1 in the spritesheet.</span>
+<span style="color: #BBB">        </span><span style="color: #080; font-style: italic">-- The second argument specifies the Kobold&#39;s color (red).</span>
+<span style="color: #BBB">        </span><span style="color: #2C2CFF; font-weight: bold">prism</span>.components.<span style="font-weight: bold; font-style: italic">Drawable</span>(<span style="color: #2C2CFF">string.byte</span>(<span style="color: #800080">&quot;k&quot;</span>)<span style="color: #BBB"> </span>+<span style="color: #BBB"> </span><span style="color: #2C8553; font-weight: bold">1</span>,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">prism</span>.<span style="font-weight: bold; font-style: italic">Color4</span>(<span style="color: #2C8553; font-weight: bold">1</span>,<span style="color: #BBB"> </span><span style="color: #2C8553; font-weight: bold">0</span>,<span style="color: #BBB"> </span><span style="color: #2C8553; font-weight: bold">0</span>)),
+
+<span style="color: #BBB">        </span><span style="color: #080; font-style: italic">-- Collider component ensures the Kobold occupies space on the map.</span>
+<span style="color: #BBB">        </span><span style="color: #080; font-style: italic">-- Custom movement types can be specified for pathing exceptions.</span>
+<span style="color: #BBB">        </span><span style="color: #2C2CFF; font-weight: bold">prism</span>.components.<span style="font-weight: bold; font-style: italic">Collider</span>(),
+
+<span style="color: #BBB">        </span><span style="color: #080; font-style: italic">-- Senses component acts as a hub for implementing perception mechanics,</span>
+<span style="color: #BBB">        </span><span style="color: #080; font-style: italic">-- such as Sight, Tremorsense, or Sound awareness.</span>
+<span style="color: #BBB">        </span><span style="color: #2C2CFF; font-weight: bold">prism</span>.components.<span style="font-weight: bold; font-style: italic">Senses</span>(),
+
+<span style="color: #BBB">        </span><span style="color: #080; font-style: italic">-- Sight component provides the Kobold with a field of vision.</span>
+<span style="color: #BBB">        </span><span style="color: #080; font-style: italic">-- Defined in `modules/Sight` and included in the template.</span>
+<span style="color: #BBB">        </span><span style="color: #2C2CFF; font-weight: bold">prism</span>.components.Sight{<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">range</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C8553; font-weight: bold">12</span>,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">fov</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">true</span><span style="color: #BBB"> </span>},
+
+<span style="color: #BBB">        </span><span style="color: #080; font-style: italic">-- Move component enables movement actions, restricted to specified movement types.</span>
+<span style="color: #BBB">        </span><span style="color: #2C2CFF; font-weight: bold">prism</span>.components.Mover{<span style="color: #BBB"> </span><span style="color: #800080">&quot;walk&quot;</span><span style="color: #BBB"> </span>}
+<span style="color: #BBB">    </span>}
+<span style="color: #353580; font-weight: bold">end</span>
+
+<span style="color: #353580; font-weight: bold">return</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Kobold</span>
+</code></pre></div>
+<p>With this, the Kobold is now a simple enemy with:
+- A visual representation.
+- A collider preventing overlap with other solid objects.
+- A perception system to detect other actors.
+- A line-of-sight system.
+- A movement component allowing it to navigate the world.</p>
+<p>Let's run the game again, and press "~". This open Geometer, the editor. Click on the k on the right hand side and use the pen tool to draw a kobold in. Press the green button to resume the game.</p>
+<h2 id="the-kobold-controller">The Kobold Controller</h2>
+<p>Now that the kobold exists in the world, you might notice something—it’s not moving! To give it behavior, we need to implement a <strong>Controller</strong> component.</p>
+<p>A <code>Controller</code> (or one of its derivatives) defines an <code>act</code> function, which takes the <strong>level</strong> and the <strong>actor</strong> as arguments and returns a valid action. Importantly, the <code>act</code> function <strong>should not modify the level directly</strong>—it should only use it to validate actions.</p>
+<ol>
+<li>Navigate to <code>modules/MyGame/components/</code>.</li>
+<li>Create a new file named <code>koboldcontroller.lua</code>.</li>
+<li>Add the following code:</li>
+</ol>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-style: italic">--- @class KoboldController : Controller</span>
+<span style="color: #080; font-style: italic">--- @field blackboard table|nil</span>
+<span style="color: #080; font-style: italic">--- @overload fun(): KoboldController</span>
+<span style="color: #080; font-style: italic">--- @type KoboldController</span>
+<span style="color: #2C2CFF">local</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">KoboldController</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">prism</span>.Controller:<span style="font-weight: bold; font-style: italic">extend</span>(<span style="color: #800080">&quot;KoboldController&quot;</span>)
+<span style="color: #2C2CFF; font-weight: bold">KoboldController</span>.name<span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #800080">&quot;KoboldController&quot;</span>
+
+<span style="color: #080; font-style: italic">---@return Action</span>
+<span style="color: #353580; font-weight: bold">function</span><span style="color: #BBB"> </span>KoboldController:<span style="font-weight: bold; font-style: italic">act</span>(<span style="color: #2C2CFF; font-weight: bold">level</span>,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">actor</span>)
+<span style="color: #BBB">    </span><span style="color: #080; font-style: italic">-- Retrieve the senses component to detect nearby actors.</span>
+<span style="color: #BBB">    </span><span style="color: #2C2CFF">local</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">senses</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">self</span>:<span style="font-weight: bold; font-style: italic">getComponent</span>(<span style="color: #2C2CFF; font-weight: bold">prism</span>.components.Senses)
+
+<span style="color: #BBB">    </span><span style="color: #080; font-style: italic">-- Identify the closest sensed actor that has a Controller.</span>
+<span style="color: #BBB">    </span><span style="color: #2C2CFF">local</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">closest</span>
+<span style="color: #BBB">    </span><span style="color: #2C2CFF">local</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">closestDistance</span>
+<span style="color: #BBB">    </span><span style="color: #353580; font-weight: bold">for</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">sensedActor</span><span style="color: #BBB"> </span><span style="color: #353580; font-weight: bold">in</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">senses</span>.actors:<span style="font-weight: bold; font-style: italic">eachActor</span>(<span style="color: #2C2CFF; font-weight: bold">prism</span>.components.Controller)<span style="color: #BBB"> </span><span style="color: #353580; font-weight: bold">do</span>
+<span style="color: #BBB">        </span><span style="color: #2C2CFF">local</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">dist</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">sensedActor</span>:<span style="font-weight: bold; font-style: italic">getRange</span>(<span style="color: #2C2CFF; font-weight: bold">actor</span>)
+<span style="color: #BBB">        </span><span style="color: #353580; font-weight: bold">if</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">dist</span><span style="color: #BBB"> </span>&lt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">closestDistance</span><span style="color: #BBB"> </span><span style="color: #353580; font-weight: bold">then</span>
+<span style="color: #BBB">            </span><span style="color: #2C2CFF; font-weight: bold">closest</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">sensedActor</span>
+<span style="color: #BBB">            </span><span style="color: #2C2CFF; font-weight: bold">closestDistance</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">dist</span>
+<span style="color: #BBB">        </span><span style="color: #353580; font-weight: bold">end</span>
+<span style="color: #BBB">    </span><span style="color: #353580; font-weight: bold">end</span>
+
+<span style="color: #BBB">    </span><span style="color: #080; font-style: italic">-- If no valid target is found, wait.</span>
+<span style="color: #BBB">    </span><span style="color: #353580; font-weight: bold">if</span><span style="color: #BBB"> </span>not<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">closest</span><span style="color: #BBB"> </span><span style="color: #353580; font-weight: bold">then</span><span style="color: #BBB"> </span><span style="color: #353580; font-weight: bold">return</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">prism</span>.actions.<span style="font-weight: bold; font-style: italic">Wait</span>()<span style="color: #BBB"> </span><span style="color: #353580; font-weight: bold">end</span>
+
+<span style="color: #BBB">    </span><span style="color: #080; font-style: italic">-- Use Prism&#39;s pathfinding to determine a route to the closest actor.</span>
+<span style="color: #BBB">    </span><span style="color: #2C2CFF">local</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">path</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">level</span>:<span style="font-weight: bold; font-style: italic">findPath</span>(<span style="color: #2C2CFF; font-weight: bold">actor</span>:<span style="font-weight: bold; font-style: italic">getPosition</span>(),<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">closest</span>:<span style="font-weight: bold; font-style: italic">getPosition</span>(),<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">nil</span>,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">stats</span>.mask)
+
+<span style="color: #BBB">    </span><span style="color: #080; font-style: italic">-- If a valid path is found, attempt to move along it.</span>
+<span style="color: #BBB">    </span><span style="color: #353580; font-weight: bold">if</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">path</span><span style="color: #BBB"> </span><span style="color: #353580; font-weight: bold">then</span>
+<span style="color: #BBB">        </span><span style="color: #2C2CFF">local</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">move</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">prism</span>.actions.<span style="font-weight: bold; font-style: italic">Move</span>(<span style="color: #2C2CFF; font-weight: bold">actor</span>,<span style="color: #BBB"> </span>{<span style="color: #2C2CFF; font-weight: bold">path</span>:<span style="font-weight: bold; font-style: italic">pop</span>()})
+<span style="color: #BBB">        </span><span style="color: #353580; font-weight: bold">if</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">move</span>:<span style="font-weight: bold; font-style: italic">canPerform</span>(<span style="color: #2C2CFF; font-weight: bold">level</span>)<span style="color: #BBB"> </span><span style="color: #353580; font-weight: bold">then</span>
+<span style="color: #BBB">            </span><span style="color: #353580; font-weight: bold">return</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">move</span>
+<span style="color: #BBB">        </span><span style="color: #353580; font-weight: bold">end</span>
+<span style="color: #BBB">    </span><span style="color: #353580; font-weight: bold">end</span>
+
+<span style="color: #BBB">    </span><span style="color: #080; font-style: italic">-- If no action can be taken, wait.</span>
+<span style="color: #BBB">    </span><span style="color: #353580; font-weight: bold">return</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">prism</span>.actions.<span style="font-weight: bold; font-style: italic">Wait</span>()
+<span style="color: #353580; font-weight: bold">end</span>
+
+<span style="color: #353580; font-weight: bold">return</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">KoboldController</span>
+</code></pre></div>
+<h3 id="integrating-the-controller">Integrating the Controller</h3>
+<p>Now, open <code>kobold.lua</code> and add the new component:</p>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">prism</span>.components.<span style="font-weight: bold; font-style: italic">KoboldController</span>()
+</code></pre></div>
+<h3 id="testing-the-kobold-ai">Testing the Kobold AI</h3>
+<p>Run the game and open <strong>Geometer</strong> by pressing <code>~</code>.<br />
+1. Click on the <strong>"k"</strong> character.<br />
+2. Click anywhere in the level to <strong>spawn a kobold</strong>.<br />
+3. Resume the game using the <strong>green button</strong>.  </p>
+<p>The kobold should now follow you when it sees you. However, if you spawn a second kobold, you’ll notice an issue—they can get stuck in a loop following each other!  </p>
+<p>To fix this, we’ll ensure that kobolds only follow the <strong>player</strong>.</p>
+<hr />
+<h2 id="adding-a-player-tag">Adding a Player Tag</h2>
+<p>To differentiate the player from other actors, we need a way to identify it. A full roguelike might implement a faction system, but for now, we’ll use a <strong>simple tag component</strong>.</p>
+<h3 id="creating-the-playertag-component">Creating the PlayerTag Component</h3>
+<ol>
+<li>Navigate to <code>modules/MyGame/components/</code>.</li>
+<li>Create a new file named <code>player.lua</code>.</li>
+<li>Add the following code:</li>
+</ol>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF">local</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">PlayerTag</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">prism</span>.Component:<span style="font-weight: bold; font-style: italic">extend</span>(<span style="color: #800080">&quot;PlayerTagComponent&quot;</span>)
+<span style="color: #2C2CFF; font-weight: bold">PlayerTag</span>.name<span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #800080">&quot;PlayerTag&quot;</span>
+</code></pre></div>
+<h3 id="assigning-the-playertag">Assigning the PlayerTag</h3>
+<p>Next, modify <code>modules/MyGame/actors/player.lua</code> to add the new component:</p>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">prism</span>.components.<span style="font-weight: bold; font-style: italic">PlayerTag</span>()
+</code></pre></div>
+<hr />
+<h3 id="updating-the-kobold-ai">Updating the Kobold AI</h3>
+<p>Now, we’ll modify <code>KoboldController</code> so kobolds only follow actors with the <strong>PlayerTag</strong>.</p>
+<p>Replace the <code>act</code> function in <code>koboldcontroller.lua</code> with the following:</p>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #353580; font-weight: bold">function</span><span style="color: #BBB"> </span>KoboldController:<span style="font-weight: bold; font-style: italic">act</span>(<span style="color: #2C2CFF; font-weight: bold">level</span>,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">actor</span>)
+<span style="color: #BBB">    </span><span style="color: #080; font-style: italic">-- Retrieve the senses component to detect nearby actors.</span>
+<span style="color: #BBB">    </span><span style="color: #2C2CFF">local</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">senses</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">self</span>:<span style="font-weight: bold; font-style: italic">getComponent</span>(<span style="color: #2C2CFF; font-weight: bold">prism</span>.components.Senses)
+
+<span style="color: #BBB">    </span><span style="color: #080; font-style: italic">-- Identify the player from sensed actors.</span>
+<span style="color: #BBB">    </span><span style="color: #2C2CFF">local</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">player</span>
+<span style="color: #BBB">    </span><span style="color: #353580; font-weight: bold">for</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">sensedActor</span><span style="color: #BBB"> </span><span style="color: #353580; font-weight: bold">in</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">senses</span>.actors:<span style="font-weight: bold; font-style: italic">eachActor</span>(<span style="color: #2C2CFF; font-weight: bold">prism</span>.components.Player)<span style="color: #BBB"> </span><span style="color: #353580; font-weight: bold">do</span>
+<span style="color: #BBB">        </span><span style="color: #2C2CFF; font-weight: bold">player</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">sensedActor</span>
+<span style="color: #BBB">    </span><span style="color: #353580; font-weight: bold">end</span>
+
+<span style="color: #BBB">    </span><span style="color: #353580; font-weight: bold">if</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">player</span><span style="color: #BBB"> </span><span style="color: #353580; font-weight: bold">then</span>
+<span style="color: #BBB">        </span><span style="color: #080; font-style: italic">-- Use Prism&#39;s pathfinding to determine a route to the player.</span>
+<span style="color: #BBB">        </span><span style="color: #2C2CFF">local</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">path</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">level</span>:<span style="font-weight: bold; font-style: italic">findPath</span>(<span style="color: #2C2CFF; font-weight: bold">actor</span>:<span style="font-weight: bold; font-style: italic">getPosition</span>(),<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">player</span>:<span style="font-weight: bold; font-style: italic">getPosition</span>(),<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">nil</span>,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">stats</span>.mask)
+
+<span style="color: #BBB">        </span><span style="color: #080; font-style: italic">-- If a valid path is found, attempt to move along it.</span>
+<span style="color: #BBB">        </span><span style="color: #353580; font-weight: bold">if</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">path</span><span style="color: #BBB"> </span><span style="color: #353580; font-weight: bold">then</span>
+<span style="color: #BBB">            </span><span style="color: #2C2CFF">local</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">move</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">prism</span>.actions.<span style="font-weight: bold; font-style: italic">Move</span>(<span style="color: #2C2CFF; font-weight: bold">actor</span>,<span style="color: #BBB"> </span>{<span style="color: #2C2CFF; font-weight: bold">path</span>:<span style="font-weight: bold; font-style: italic">pop</span>()})
+<span style="color: #BBB">            </span><span style="color: #353580; font-weight: bold">if</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">move</span>:<span style="font-weight: bold; font-style: italic">canPerform</span>(<span style="color: #2C2CFF; font-weight: bold">level</span>)<span style="color: #BBB"> </span><span style="color: #353580; font-weight: bold">then</span>
+<span style="color: #BBB">                </span><span style="color: #353580; font-weight: bold">return</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">move</span>
+<span style="color: #BBB">            </span><span style="color: #353580; font-weight: bold">end</span><span style="color: #BBB"> </span>
+<span style="color: #BBB">        </span><span style="color: #353580; font-weight: bold">end</span>
+<span style="color: #BBB">    </span><span style="color: #353580; font-weight: bold">end</span>
+
+<span style="color: #BBB">    </span><span style="color: #080; font-style: italic">-- If no action can be taken, wait.</span>
+<span style="color: #BBB">    </span><span style="color: #353580; font-weight: bold">return</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">prism</span>.actions.<span style="font-weight: bold; font-style: italic">Wait</span>()
+<span style="color: #353580; font-weight: bold">end</span>
+</code></pre></div>
+<p>Now, kobolds will <strong>only</strong> track the player!</p>
+<h1 id="kicking-kobolds">Kicking Kobolds</h1>
+<p>In this section we'll give you something to do to these kobolds. Kick them! We'll need to create our first action. Head over
+to /modules/MyGame/actions and add kick.lua.</p>
+<p>Let's first create a target for our kick. Put this at the top of kick.lua.</p>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF">local</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">KickTarget</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">prism</span>.Target:<span style="font-weight: bold; font-style: italic">extend</span>(<span style="color: #800080">&quot;KickTarget&quot;</span>)
+<span style="color: #080; font-style: italic">-- This can be Actor, Point, Cell, or Any. You can accept a union of these types and</span>
+<span style="color: #080; font-style: italic">-- differentiate in canPerform/perform</span>
+<span style="color: #2C2CFF; font-weight: bold">KickTarget</span>.typesAllowed<span style="color: #BBB"> </span>=<span style="color: #BBB"> </span>{<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Actor</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">true</span><span style="color: #BBB"> </span>}
+<span style="color: #080; font-style: italic">-- Targets have built in range checking for brevity, we specify one here.</span>
+<span style="color: #2C2CFF; font-weight: bold">KickTarget</span>.range<span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C8553; font-weight: bold">1</span>
+
+<span style="color: #353580; font-weight: bold">function</span><span style="color: #BBB"> </span>KickTarget:<span style="font-weight: bold; font-style: italic">validate</span>(<span style="color: #2C2CFF; font-weight: bold">owner</span>,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">actor</span>,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">targets</span>)
+<span style="color: #BBB">   </span><span style="color: #080; font-style: italic">-- check if the actor has a collider</span>
+<span style="color: #BBB">   </span><span style="color: #353580; font-weight: bold">return</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">actor</span>:<span style="font-weight: bold; font-style: italic">hasComponent</span>(<span style="color: #2C2CFF; font-weight: bold">prism</span>.components.Collider)
+<span style="color: #353580; font-weight: bold">end</span>
+</code></pre></div>
+<p>So with this target we're saying you can only kick actors at range one with a collider component.</p>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #080; font-style: italic">---@class KickAction : Action</span>
+<span style="color: #080; font-style: italic">---@field name string</span>
+<span style="color: #080; font-style: italic">---@field targets Target[]</span>
+<span style="color: #080; font-style: italic">---@field previousPosition Vector2</span>
+<span style="color: #2C2CFF">local</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Kick</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">prism</span>.Action:<span style="font-weight: bold; font-style: italic">extend</span>(<span style="color: #800080">&quot;KickAction&quot;</span>)
+<span style="color: #2C2CFF; font-weight: bold">Kick</span>.name<span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #800080">&quot;move&quot;</span>
+<span style="color: #2C2CFF; font-weight: bold">Kick</span>.targets<span style="color: #BBB"> </span>=<span style="color: #BBB"> </span>{<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">KickTarget</span><span style="color: #BBB"> </span>}
+<span style="color: #2C2CFF; font-weight: bold">Kick</span>.requiredComponents<span style="color: #BBB"> </span>=<span style="color: #BBB"> </span>{
+<span style="color: #BBB">   </span><span style="color: #2C2CFF; font-weight: bold">prism</span>.components.Controller,
+<span style="color: #BBB">   </span><span style="color: #2C2CFF; font-weight: bold">prism</span>.components.Kicker,
+}
+
+<span style="color: #080; font-style: italic">--- @param level Level</span>
+<span style="color: #080; font-style: italic">--- @param kicked Actor</span>
+<span style="color: #353580; font-weight: bold">function</span><span style="color: #BBB"> </span>Kick:<span style="font-weight: bold; font-style: italic">_perform</span>(<span style="color: #2C2CFF; font-weight: bold">level</span>,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">kicked</span>)
+<span style="color: #BBB">   </span><span style="color: #2C2CFF">local</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">kicker</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">self</span>.owner:<span style="font-weight: bold; font-style: italic">expectComponent</span>(<span style="color: #2C2CFF; font-weight: bold">prism</span>.components.Kicker)
+
+<span style="color: #BBB">   </span><span style="color: #2C2CFF">local</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">kx</span>,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">ky</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span>(<span style="color: #2C2CFF; font-weight: bold">kicked</span>:<span style="font-weight: bold; font-style: italic">getPosition</span>()<span style="color: #BBB"> </span>-<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">self</span>.owner:<span style="font-weight: bold; font-style: italic">getPosition</span>()):<span style="font-weight: bold; font-style: italic">decompose</span>()
+
+<span style="color: #BBB">   </span><span style="color: #080; font-style: italic">-- &#39;normalize&#39; the kick direction</span>
+<span style="color: #BBB">   </span><span style="color: #353580; font-weight: bold">if</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">kx</span><span style="color: #BBB"> </span>&gt;<span style="color: #BBB"> </span><span style="color: #2C8553; font-weight: bold">0</span><span style="color: #BBB"> </span><span style="color: #353580; font-weight: bold">then</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">kx</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C8553; font-weight: bold">1</span><span style="color: #BBB"> </span><span style="color: #353580; font-weight: bold">elseif</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">kx</span><span style="color: #BBB"> </span>&lt;<span style="color: #BBB"> </span><span style="color: #2C8553; font-weight: bold">0</span><span style="color: #BBB"> </span><span style="color: #353580; font-weight: bold">then</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">kx</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span>-<span style="color: #2C8553; font-weight: bold">1</span><span style="color: #BBB"> </span><span style="color: #353580; font-weight: bold">end</span>
+<span style="color: #BBB">   </span><span style="color: #353580; font-weight: bold">if</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">ky</span><span style="color: #BBB"> </span>&gt;<span style="color: #BBB"> </span><span style="color: #2C8553; font-weight: bold">0</span><span style="color: #BBB"> </span><span style="color: #353580; font-weight: bold">then</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">ky</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C8553; font-weight: bold">1</span><span style="color: #BBB"> </span><span style="color: #353580; font-weight: bold">elseif</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">ky</span><span style="color: #BBB"> </span>&lt;<span style="color: #BBB"> </span><span style="color: #2C8553; font-weight: bold">0</span><span style="color: #BBB"> </span><span style="color: #353580; font-weight: bold">then</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">ky</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span>-<span style="color: #2C8553; font-weight: bold">1</span><span style="color: #BBB"> </span><span style="color: #353580; font-weight: bold">end</span>
+
+<span style="color: #BBB">   </span><span style="color: #080; font-style: italic">-- recompose back into a vector</span>
+<span style="color: #BBB">   </span><span style="color: #2C2CFF">local</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">kickdir</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">prism</span>.<span style="font-weight: bold; font-style: italic">Vector2</span>(<span style="color: #2C2CFF; font-weight: bold">kx</span>,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">ky</span>)
+
+<span style="color: #BBB">   </span><span style="color: #080; font-style: italic">-- our movetype mask for the kick, we&#39;ll give them the &#39;fly&#39; movetype</span>
+<span style="color: #BBB">   </span><span style="color: #2C2CFF">local</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">mask</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">prism</span>.Collision.createBitmaskFromMovetypes{<span style="color: #BBB"> </span><span style="color: #800080">&quot;fly&quot;</span><span style="color: #BBB"> </span>}
+
+<span style="color: #BBB">   </span><span style="color: #080; font-style: italic">-- now we loop and continue to try to move the kicked in the direction</span>
+<span style="color: #BBB">   </span><span style="color: #080; font-style: italic">-- of the kick a number of tiles equal to the kicker&#39;s kick strength.</span>
+<span style="color: #BBB">   </span><span style="color: #353580; font-weight: bold">for</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">i</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C8553; font-weight: bold">1</span>,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">kicker</span>.strength<span style="color: #BBB"> </span><span style="color: #353580; font-weight: bold">do</span>
+<span style="color: #BBB">      </span><span style="color: #2C2CFF">local</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">nextpos</span><span style="color: #BBB"> </span>=<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">kicked</span>:<span style="font-weight: bold; font-style: italic">getPosition</span>()<span style="color: #BBB"> </span>+<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">kickdir</span>
+<span style="color: #BBB">      </span><span style="color: #353580; font-weight: bold">if</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">level</span>:<span style="font-weight: bold; font-style: italic">getCellPassable</span>(<span style="color: #2C2CFF; font-weight: bold">nextpos</span>.x,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">nextpos</span>.y,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">mask</span>)<span style="color: #BBB"> </span><span style="color: #353580; font-weight: bold">then</span>
+<span style="color: #BBB">         </span><span style="color: #2C2CFF; font-weight: bold">level</span>:<span style="font-weight: bold; font-style: italic">moveActor</span>(<span style="color: #2C2CFF; font-weight: bold">kicked</span>,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">nextpos</span>)
+<span style="color: #BBB">      </span><span style="color: #353580; font-weight: bold">end</span>
+<span style="color: #BBB">   </span><span style="color: #353580; font-weight: bold">end</span>
+<span style="color: #353580; font-weight: bold">end</span><span style="color: #BBB">   </span>
+
+<span style="color: #353580; font-weight: bold">return</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Kick</span>
+</code></pre></div>
+</section>
+
+            </main>
+        </div>
+        <hr><footer>
+    <div class="terminal-mkdocs-footer-grid">
+        <div id="terminal-mkdocs-footer-copyright-info">
+             Site built with <a href="http://www.mkdocs.org">MkDocs</a> and <a href="https://github.com/ntno/mkdocs-terminal">Terminal for MkDocs</a>.
+        </div>
+    </div>
+</footer>
+    </div>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="alertdialog" aria-modal="true" aria-labelledby="searchModalLabel">
+    <div class="modal-dialog modal-lg" role="search">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="searchModalLabel">Search</h5>
+                <button type="button" class="close btn btn-default btn-ghost" data-dismiss="modal"><span aria-hidden="true">x</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p id="searchInputLabel">Type to start searching</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" aria-labelledby="searchInputLabel" placeholder="" id="mkdocs-search-query" title="Please enter search terms here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No document matches found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+</body>
+
+</html>

@@ -1,0 +1,2445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="generator" content="mkdocs-1.6.1, mkdocs-terminal-4.7.0">
+     
+     
+    <link rel="icon" type="image/png" sizes="192x192" href="../../img/android-chrome-192x192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="../../img/android-chrome-512x512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+<link rel="shortcut icon" type="image/png" sizes="48x48" href="../../img/favicon.ico" />
+<link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+
+
+    
+ 
+<title>map - PRISM: A ROGUELIKE ENGINE</title>
+
+
+<link href="../../css/fontawesome/css/fontawesome.min.css" rel="stylesheet">
+<link href="../../css/fontawesome/css/solid.min.css" rel="stylesheet">
+<link href="../../css/normalize.css" rel="stylesheet">
+<link href="../../css/terminal.css" rel="stylesheet">
+<link href="../../css/theme.css" rel="stylesheet">
+<link href="../../css/theme.tile_grid.css" rel="stylesheet">
+<link href="../../css/theme.footer.css" rel="stylesheet">
+<!-- default color palette -->
+<link href="../../css/palettes/default.css" rel="stylesheet">
+
+<!-- page layout -->
+<style>
+/* initially set page layout to a one column grid */
+.terminal-mkdocs-main-grid {
+    display: grid;
+    grid-column-gap: 1.4em;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+}
+
+/*  
+*   when side navigation is not hidden, use a two column grid.  
+*   if the screen is too narrow, fall back to the initial one column grid layout.
+*   in this case the main content will be placed under the navigation panel. 
+*/
+@media only screen and (min-width: 70em) {
+    .terminal-mkdocs-main-grid {
+        grid-template-columns: 4fr 9fr;
+    }
+}</style>
+
+
+
+     
+    
+    
+
+    
+    <!-- search css support -->
+<link href="../../css/search/bootstrap-modal.css" rel="stylesheet">
+<!-- search scripts -->
+<script>
+    var base_url = "../..",
+    shortcuts = "{}";
+</script>
+<script src="../../js/jquery/jquery-1.10.1.min.js" defer></script>
+<script src="../../js/bootstrap/bootstrap.min.js" defer></script>
+<script src="../../js/mkdocs/base.js" defer></script>
+    
+    
+    
+    
+    <script src="../../search/main.js"></script>
+    
+
+    
+</head>
+
+<body class="terminal"><div class="container">
+    <div class="terminal-nav">
+        <header class="terminal-logo">
+            <div id="mkdocs-terminal-site-name" class="logo terminal-prompt"><a href="/" class="no-style">PRISM: A ROGUELIKE ENGINE</a></div>
+        </header>
+        
+        <nav class="terminal-menu">
+            
+            <ul vocab="https://schema.org/" typeof="BreadcrumbList">
+                
+                
+                <li property="itemListElement" typeof="ListItem">
+                    <a href="../.." class="menu-item " property="item" typeof="WebPage">
+                        <span property="name">Home</span>
+                    </a>
+                    <meta property="position" content="0">
+                </li>
+                
+                
+                <li property="itemListElement" typeof="ListItem">
+                    <a href="../../doc/" class="menu-item " property="item" typeof="WebPage">
+                        <span property="name">Documentation</span>
+                    </a>
+                    <meta property="position" content="1">
+                </li>
+                
+                
+                <li property="itemListElement" typeof="ListItem">
+                    <a href="../../architecture-primer/" class="menu-item " property="item" typeof="WebPage">
+                        <span property="name">Architecture Primer</span>
+                    </a>
+                    <meta property="position" content="2">
+                </li>
+                
+                
+                
+                
+                
+                    
+                    
+
+
+<li property="itemListElement" typeof="ListItem">
+    <a href="#" class="menu-item" data-toggle="modal" data-target="#mkdocs_search_modal" property="item" typeof="SearchAction">
+        <i aria-hidden="true" class="fa fa-search"></i> <span property="name">Search</span>
+    </a>
+    <meta property="position" content="3">
+</li>
+                    
+            </ul>
+            
+        </nav>
+    </div>
+</div>
+        
+    <div class="container">
+        <div class="terminal-mkdocs-main-grid"><aside id="terminal-mkdocs-side-panel"><nav>
+  
+    <ul class="terminal-mkdocs-side-nav-items">
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../..">Home</a>
+        
+    
+    
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../../doc/">Documentation</a>
+        
+    
+    
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../../architecture-primer/">Architecture Primer</a>
+        
+    
+    
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+        
+        
+
+        
+            
+    
+        
+        
+            
+            
+            <span class="
+        
+    
+
+    terminal-mkdocs-side-nav-item terminal-mkdocs-side-nav-section-no-index">Making a roguelike</span>
+        
+    
+    
+        
+      
+        
+            <ul class="terminal-mkdocs-side-nav-li-ul">
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../../making-a-roguelike-part1/">Part 01</a>
+        
+    
+    </li>
+            
+            
+    </ul>
+        
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+        
+        
+
+        
+            
+    
+        
+        <span class="
+        
+    
+
+    terminal-mkdocs-side-nav-item--active terminal-mkdocs-side-nav-section-no-index">API</span>
+    
+    
+        
+      
+        
+            <ul class="terminal-mkdocs-side-nav-li-ul">
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../action/">action</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../actiondecision/">actiondecision</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../actionmessage/">actionmessage</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../actor/">actor</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../actorstorage/">actorstorage</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../arg/">arg</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../assert/">assert</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../bitmaskbuffer/">bitmaskbuffer</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../boolean/">boolean</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../booleanbuffer/">booleanbuffer</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../boundingbox/">boundingbox</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../btconditional/">btconditional</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../btnode/">btnode</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../btroot/">btroot</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../btselector/">btselector</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../btsequence/">btsequence</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../btsucceeder/">btsucceeder</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../button/">button</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../buttonprops/">buttonprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../camera/">camera</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../cell/">cell</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../collectgarbage/">collectgarbage</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../collidercomponent/">collidercomponent</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../collideroptions/">collideroptions</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../collisionmask/">collisionmask</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../color4/">color4</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../component/">component</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../controllercomponent/">controllercomponent</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../coroutine/">coroutine</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../coroutinelib/">coroutinelib</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../debug/">debug</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../debuginfo/">debuginfo</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../debuglib/">debuglib</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../debugmessage/">debugmessage</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../decision/">decision</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../display/">display</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../distancetype/">distancetype</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../dofile/">dofile</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../drawablecomponent/">drawablecomponent</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../editor/">editor</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../editorgrid/">editorgrid</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../editorgridinit/">editorgridinit</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../editorgridprops/">editorgridprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../editorroot/">editorroot</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../editorrootprops/">editorrootprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../editorstate/">editorstate</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../ellipsemodification/">ellipsemodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../ellipsetool/">ellipsetool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../erasemodification/">erasemodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../erasetool/">erasetool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../filepanel/">filepanel</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../filepanelinit/">filepanelinit</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../filepanelprops/">filepanelprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../filetype/">filetype</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../fill/">fill</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../fraction/">fraction</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../function/">function</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../gamestate/">gamestate</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../gamestatemanager/">gamestatemanager</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../geometer/">geometer</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../grid/">grid</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../ibehavior/">ibehavior</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../keybinding/">keybinding</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../level/">level</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../levelstate/">levelstate</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../linemodification/">linemodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../linetool/">linetool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        <span class="
+
+    terminal-mkdocs-side-nav-item--active">map</span>
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../mapbuilder/">mapbuilder</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../mapgeneratorstate/">mapgeneratorstate</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../message/">message</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../modification/">modification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../neighborhood/">neighborhood</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../object/">object</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../opaquecomponent/">opaquecomponent</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../pastemodification/">pastemodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../penmodification/">penmodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../pentool/">pentool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../placeable/">placeable</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../playercontrollercomponent/">playercontrollercomponent</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../prefabeditorstate/">prefabeditorstate</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../priorityqueue/">priorityqueue</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../prism/">prism</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../quadrant/">quadrant</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../queue/">queue</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../rectmodification/">rectmodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../recttool/">recttool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../rng/">rng</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../row/">row</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../scheduler/">scheduler</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../selectiongrid/">selectiongrid</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../selectiongridinit/">selectiongridinit</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../selectiongridprops/">selectiongridprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../selectionpanel/">selectionpanel</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../selectionpanelinit/">selectionpanelinit</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../selectionpanelprops/">selectionpanelprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../selecttool/">selecttool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../sensescomponent/">sensescomponent</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../sensessystem/">sensessystem</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../sensestracker/">sensestracker</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../simplescheduler/">simplescheduler</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../sparsearray/">sparsearray</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../sparsegrid/">sparsegrid</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../sparsemap/">sparsemap</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../spectrum/">spectrum</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../spectrumattachable/">spectrumattachable</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../spriteatlas/">spriteatlas</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../system/">system</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../systemmanager/">systemmanager</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../target/">target</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../textinput/">textinput</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../textinputinit/">textinputinit</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../textinputprops/">textinputprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../tileelement/">tileelement</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../tileelementprops/">tileelementprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../tool/">tool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../tools/">tools</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../toolsprops/">toolsprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../unfloatselectionmodification/">unfloatselectionmodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../vector2/">vector2</a>
+        
+    
+    </li>
+            
+            
+    </ul>
+        
+    
+  </li>
+        
+    </ul>
+  
+</nav><hr>
+<nav>
+    <ul>
+        <li><a href="#__call">__call</a></li>
+        <li><a href="#__index">__index</a></li>
+        <li><a href="#__new">__new</a></li>
+        <li><a href="#_serializationblacklist">_serializationBlacklist</a></li>
+        <li><a href="#adopt">adopt</a></li>
+        <li><a href="#classname">className</a></li>
+        <li><a href="#data">data</a></li>
+        <li><a href="#deserialize">deserialize</a></li>
+        <li><a href="#each">each</a></li>
+        <li><a href="#extend">extend</a></li>
+        <li><a href="#fill">fill</a></li>
+        <li><a href="#fromdata">fromData</a></li>
+        <li><a href="#get">get</a></li>
+        <li><a href="#getcellopaque">getCellOpaque</a></li>
+        <li><a href="#getcellpassable">getCellPassable</a></li>
+        <li><a href="#getindex">getIndex</a></li>
+        <li><a href="#h">h</a></li>
+        <li><a href="#instanceof">instanceOf</a></li>
+        <li><a href="#is">is</a></li>
+        <li><a href="#mixin">mixin</a></li>
+        <li><a href="#ondeserialize">onDeserialize</a></li>
+        <li><a href="#opacitycache">opacityCache</a></li>
+        <li><a href="#passablecache">passableCache</a></li>
+        <li><a href="#prettyprint">prettyprint</a></li>
+        <li><a href="#serializationblacklist">serializationBlacklist</a></li>
+        <li><a href="#serialize">serialize</a></li>
+        <li><a href="#set">set</a></li>
+        <li><a href="#stripname">stripName</a></li>
+        <li><a href="#updatecaches">updateCaches</a></li>
+        <li><a href="#w">w</a></li>
+        
+    </ul>
+</nav>
+</aside>
+            <main id="terminal-mkdocs-main-content">
+<section id="mkdocs-terminal-content">
+    <h3 id="__call">__call</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #353580; font-weight: bold">function</span>
+</code></pre></div>
+<h3 id="__index">__index</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">Object</span>
+</code></pre></div>
+<p>A simple class system for Lua. This is the base class for all other classes in PRISM.</p>
+<h3 id="__new">__new</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Map</span>:<span style="font-weight: bold; font-style: italic">__new</span>(<span style="color: #2C2CFF; font-weight: bold">w</span>:<span style="color: #BBB"> </span>number,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">h</span>:<span style="color: #BBB"> </span>number,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">initialValue</span>:<span style="color: #BBB"> </span>Cell)
+</code></pre></div>
+<p>The constructor for the 'Map' class.
+ Initializes the map with the specified dimensions and initial value, and sets up the opacity caches.</p>
+<p>@<em>param</em> <code>w</code> — The width of the map.</p>
+<p>@<em>param</em> <code>h</code> — The height of the map.</p>
+<p>@<em>param</em> <code>initialValue</code> — The initial value to fill the map with.</p>
+<h3 id="_serializationblacklist">_serializationBlacklist</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">table</span>
+</code></pre></div>
+<h3 id="adopt">adopt</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Object</span>:<span style="font-weight: bold; font-style: italic">adopt</span>(<span style="color: #2C2CFF; font-weight: bold">o</span>:<span style="color: #BBB"> </span>any)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<h3 id="classname">className</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">string</span>
+</code></pre></div>
+<p>A unique name for this class. By convention this should match the annotation name you use.</p>
+<h3 id="data">data</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">any</span>[]
+</code></pre></div>
+<p>The data stored in the grid.</p>
+<h3 id="deserialize">deserialize</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #353580; font-weight: bold">function</span><span style="color: #BBB"> </span>Object.<span style="font-weight: bold; font-style: italic">deserialize</span>(<span style="color: #2C2CFF; font-weight: bold">data</span>:<span style="color: #BBB"> </span>any)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<h3 id="each">each</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Grid</span>:<span style="font-weight: bold; font-style: italic">each</span>()
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">An</span>:<span style="color: #BBB"> </span><span style="font-weight: bold; font-style: italic">fun</span>():<span style="color: #2C2CFF; font-weight: bold">number</span>,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">number</span>,<span style="color: #BBB"> </span>&lt;<span style="color: #2C2CFF; font-weight: bold">T</span>&gt;
+</code></pre></div>
+<p>Iterates over each cell in the grid, yielding x, y, and the value.</p>
+<p>@<em>return</em> <code>An</code> — iterator returning x, y, and value for each cell.</p>
+<h3 id="extend">extend</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Object</span>:<span style="font-weight: bold; font-style: italic">extend</span>(<span style="color: #2C2CFF; font-weight: bold">className</span>:<span style="color: #BBB"> </span>string,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">ignoreclassName</span><span style="color: #A61717; background-color: #E3D2D2">?</span>:<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">boolean</span>)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">prototype</span>:<span style="color: #BBB"> </span><span style="color: #A61717; background-color: #E3D2D2">&lt;</span>T&gt;
+</code></pre></div>
+<p>Creates a new class and sets its metatable to the extended class.</p>
+<p>@<em>param</em> <code>className</code> — name for the class</p>
+<p>@<em>param</em> <code>ignoreclassName</code> — if true, skips the uniqueness check in prism's registry</p>
+<p>@<em>return</em> <code>prototype</code> — The new class prototype extended from this one.</p>
+<h3 id="fill">fill</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Grid</span>:<span style="font-weight: bold; font-style: italic">fill</span>(<span style="color: #2C2CFF; font-weight: bold">value</span>:<span style="color: #BBB"> </span><span style="color: #A61717; background-color: #E3D2D2">&lt;</span>T&gt;)
+</code></pre></div>
+<p>Fills the entire grid with the specified value.</p>
+<p>@<em>param</em> <code>value</code> — The value to fill the grid with.</p>
+<h3 id="fromdata">fromData</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Grid</span>:<span style="font-weight: bold; font-style: italic">fromData</span>(<span style="color: #2C2CFF; font-weight: bold">w</span>:<span style="color: #BBB"> </span>integer,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">h</span>:<span style="color: #BBB"> </span>integer,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">data</span>:<span style="color: #BBB"> </span><span style="color: #A61717; background-color: #E3D2D2">&lt;</span>T&gt;[])
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">The</span>:<span style="color: #BBB"> </span>Grid&lt;&lt;<span style="color: #2C2CFF; font-weight: bold">T</span>&gt;&gt;
+</code></pre></div>
+<p>Initializes the grid with the specified dimensions and data.</p>
+<p>@<em>param</em> <code>w</code> — The width of the grid.</p>
+<p>@<em>param</em> <code>h</code> — The height of the grid.</p>
+<p>@<em>param</em> <code>data</code> — The data to fill the grid with.</p>
+<p>@<em>return</em> <code>The</code> — initialized grid.</p>
+<h3 id="get">get</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Map</span>:<span style="font-weight: bold; font-style: italic">get</span>(<span style="color: #2C2CFF; font-weight: bold">x</span>:<span style="color: #BBB"> </span>number,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">y</span>:<span style="color: #BBB"> </span>number)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">cell</span>:<span style="color: #BBB"> </span>Cell
+</code></pre></div>
+<p>Gets the cell at the specified coordinates.</p>
+<p>@<em>param</em> <code>x</code> — The x-coordinate.</p>
+<p>@<em>param</em> <code>y</code> — The y-coordinate.</p>
+<p>@<em>return</em> <code>cell</code> — The cell at the specified coordinates.</p>
+<h3 id="getcellopaque">getCellOpaque</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Map</span>:<span style="font-weight: bold; font-style: italic">getCellOpaque</span>(<span style="color: #2C2CFF; font-weight: bold">x</span>:<span style="color: #BBB"> </span>number,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">y</span>:<span style="color: #BBB"> </span>number)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">True</span>:<span style="color: #BBB"> </span>boolean
+</code></pre></div>
+<p>Returns true if the cell at the specified coordinates is opaque, false otherwise.</p>
+<p>@<em>param</em> <code>x</code> — The x-coordinate.</p>
+<p>@<em>param</em> <code>y</code> — The y-coordinate.</p>
+<p>@<em>return</em> <code>True</code> — if the cell is opaque, false otherwise.</p>
+<h3 id="getcellpassable">getCellPassable</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Map</span>:<span style="font-weight: bold; font-style: italic">getCellPassable</span>(<span style="color: #2C2CFF; font-weight: bold">x</span>:<span style="color: #BBB"> </span>number,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">y</span>:<span style="color: #BBB"> </span>number,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">mask</span>:<span style="color: #BBB"> </span>any)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">True</span>:<span style="color: #BBB"> </span>boolean
+</code></pre></div>
+<p>Returns true if the cell at the specified coordinates is passable, false otherwise.</p>
+<p>@<em>param</em> <code>x</code> — The x-coordinate.</p>
+<p>@<em>param</em> <code>y</code> — The y-coordinate.</p>
+<p>@<em>return</em> <code>True</code> — if the cell is passable, false otherwise.</p>
+<h3 id="getindex">getIndex</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Grid</span>:<span style="font-weight: bold; font-style: italic">getIndex</span>(<span style="color: #2C2CFF; font-weight: bold">x</span>:<span style="color: #BBB"> </span>integer,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">y</span>:<span style="color: #BBB"> </span>integer)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">The</span>:<span style="color: #BBB"> </span>number<span style="color: #A61717; background-color: #E3D2D2">?</span>
+</code></pre></div>
+<p>Gets the index in the data array for the specified coordinates.</p>
+<p>@<em>param</em> <code>x</code> — The x-coordinate.</p>
+<p>@<em>param</em> <code>y</code> — The y-coordinate.</p>
+<p>@<em>return</em> <code>The</code> — index in the data array, or nil if out of bounds.</p>
+<h3 id="h">h</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">integer</span>
+</code></pre></div>
+<p>The height of the grid.</p>
+<h3 id="instanceof">instanceOf</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Object</span>:<span style="font-weight: bold; font-style: italic">instanceOf</span>(<span style="color: #2C2CFF; font-weight: bold">o</span>:<span style="color: #BBB"> </span>table)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">extends</span>:<span style="color: #BBB"> </span>boolean
+</code></pre></div>
+<p>Checks if o is the first class in the inheritance chain of self.</p>
+<p>@<em>param</em> <code>o</code> — The class to check.</p>
+<p>@<em>return</em> <code>extends</code> — True if o is the first class in the inheritance chain of self, false otherwise.</p>
+<h3 id="is">is</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Object</span>:<span style="font-weight: bold; font-style: italic">is</span>(<span style="color: #2C2CFF; font-weight: bold">o</span>:<span style="color: #BBB"> </span>table)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">is</span>:<span style="color: #BBB"> </span>boolean
+</code></pre></div>
+<p>Checks if o is in the inheritance chain of self.</p>
+<p>@<em>param</em> <code>o</code> — The class to check.</p>
+<p>@<em>return</em> <code>is</code> — True if o is in the inheritance chain of self, false otherwise.</p>
+<h3 id="mixin">mixin</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Object</span>:<span style="font-weight: bold; font-style: italic">mixin</span>(<span style="color: #2C2CFF; font-weight: bold">mixin</span>:<span style="color: #BBB"> </span>table)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Object</span>
+</code></pre></div>
+<p>Mixes in methods and properties from another table, excluding blacklisted metamethods.
+ THis does not deep copy or merge tables, currently. It's a shallow mixin.</p>
+<p>@<em>param</em> <code>mixin</code> — The table containing methods and properties to mix in.</p>
+<h3 id="ondeserialize">onDeserialize</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Map</span>:<span style="font-weight: bold; font-style: italic">onDeserialize</span>()
+</code></pre></div>
+<h3 id="opacitycache">opacityCache</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">BooleanBuffer</span>
+</code></pre></div>
+<p>Caches the opaciy of the cell + actors in each tile for faster fov calculation.</p>
+<h3 id="passablecache">passableCache</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">BitmaskBuffer</span>
+</code></pre></div>
+<p>A class representing a 2D bitmask buffer using 16-bit integers.</p>
+<h3 id="prettyprint">prettyprint</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #353580; font-weight: bold">function</span><span style="color: #BBB"> </span>Object.<span style="font-weight: bold; font-style: italic">prettyprint</span>(<span style="color: #2C2CFF; font-weight: bold">obj</span>:<span style="color: #BBB"> </span>table,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">indent</span>:<span style="color: #BBB"> </span>string,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">visited</span>:<span style="color: #BBB"> </span>table)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">string</span>
+</code></pre></div>
+<p>Pretty-prints an object for debugging or visualization.</p>
+<p>@<em>param</em> <code>obj</code> — The object to pretty-print.</p>
+<p>@<em>param</em> <code>indent</code> — The current indentation level (used for recursion).</p>
+<p>@<em>param</em> <code>visited</code> — A table of visited objects to prevent circular references.</p>
+<h3 id="serializationblacklist">serializationBlacklist</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">table</span>
+</code></pre></div>
+<h3 id="serialize">serialize</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #353580; font-weight: bold">function</span><span style="color: #BBB"> </span>Object.<span style="font-weight: bold; font-style: italic">serialize</span>(<span style="color: #2C2CFF; font-weight: bold">object</span>:<span style="color: #BBB"> </span>any)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">table</span>
+</code></pre></div>
+<h3 id="set">set</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Map</span>:<span style="font-weight: bold; font-style: italic">set</span>(<span style="color: #2C2CFF; font-weight: bold">x</span>:<span style="color: #BBB"> </span>number,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">y</span>:<span style="color: #BBB"> </span>number,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">cell</span>:<span style="color: #BBB"> </span>Cell)
+</code></pre></div>
+<p>Sets the cell at the specified coordinates to the given value.</p>
+<p>@<em>param</em> <code>x</code> — The x-coordinate.</p>
+<p>@<em>param</em> <code>y</code> — The y-coordinate.</p>
+<p>@<em>param</em> <code>cell</code> — The cell to set.</p>
+<h3 id="stripname">stripName</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">boolean</span>
+</code></pre></div>
+<h3 id="updatecaches">updateCaches</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Map</span>:<span style="font-weight: bold; font-style: italic">updateCaches</span>(<span style="color: #2C2CFF; font-weight: bold">x</span>:<span style="color: #BBB"> </span>number,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">y</span>:<span style="color: #BBB"> </span>number)
+</code></pre></div>
+<p>Updates the opacity cache at the specified coordinates.</p>
+<p>@<em>param</em> <code>x</code> — The x-coordinate.</p>
+<p>@<em>param</em> <code>y</code> — The y-coordinate.</p>
+<h3 id="w">w</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">integer</span>
+</code></pre></div>
+<p>The width of the grid.</p>
+<hr />
+</section>
+
+            </main>
+        </div>
+        <hr><footer>
+    <div class="terminal-mkdocs-footer-grid">
+        <div id="terminal-mkdocs-footer-copyright-info">
+             Site built with <a href="http://www.mkdocs.org">MkDocs</a> and <a href="https://github.com/ntno/mkdocs-terminal">Terminal for MkDocs</a>.
+        </div>
+    </div>
+</footer>
+    </div>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="alertdialog" aria-modal="true" aria-labelledby="searchModalLabel">
+    <div class="modal-dialog modal-lg" role="search">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="searchModalLabel">Search</h5>
+                <button type="button" class="close btn btn-default btn-ghost" data-dismiss="modal"><span aria-hidden="true">x</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p id="searchInputLabel">Type to start searching</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" aria-labelledby="searchInputLabel" placeholder="" id="mkdocs-search-query" title="Please enter search terms here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No document matches found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+</body>
+
+</html>

@@ -1,0 +1,2659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="generator" content="mkdocs-1.6.1, mkdocs-terminal-4.7.0">
+     
+     
+    <link rel="icon" type="image/png" sizes="192x192" href="../../img/android-chrome-192x192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="../../img/android-chrome-512x512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+<link rel="shortcut icon" type="image/png" sizes="48x48" href="../../img/favicon.ico" />
+<link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+
+
+    
+ 
+<title>prism - PRISM: A ROGUELIKE ENGINE</title>
+
+
+<link href="../../css/fontawesome/css/fontawesome.min.css" rel="stylesheet">
+<link href="../../css/fontawesome/css/solid.min.css" rel="stylesheet">
+<link href="../../css/normalize.css" rel="stylesheet">
+<link href="../../css/terminal.css" rel="stylesheet">
+<link href="../../css/theme.css" rel="stylesheet">
+<link href="../../css/theme.tile_grid.css" rel="stylesheet">
+<link href="../../css/theme.footer.css" rel="stylesheet">
+<!-- default color palette -->
+<link href="../../css/palettes/default.css" rel="stylesheet">
+
+<!-- page layout -->
+<style>
+/* initially set page layout to a one column grid */
+.terminal-mkdocs-main-grid {
+    display: grid;
+    grid-column-gap: 1.4em;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+}
+
+/*  
+*   when side navigation is not hidden, use a two column grid.  
+*   if the screen is too narrow, fall back to the initial one column grid layout.
+*   in this case the main content will be placed under the navigation panel. 
+*/
+@media only screen and (min-width: 70em) {
+    .terminal-mkdocs-main-grid {
+        grid-template-columns: 4fr 9fr;
+    }
+}</style>
+
+
+
+     
+    
+    
+
+    
+    <!-- search css support -->
+<link href="../../css/search/bootstrap-modal.css" rel="stylesheet">
+<!-- search scripts -->
+<script>
+    var base_url = "../..",
+    shortcuts = "{}";
+</script>
+<script src="../../js/jquery/jquery-1.10.1.min.js" defer></script>
+<script src="../../js/bootstrap/bootstrap.min.js" defer></script>
+<script src="../../js/mkdocs/base.js" defer></script>
+    
+    
+    
+    
+    <script src="../../search/main.js"></script>
+    
+
+    
+</head>
+
+<body class="terminal"><div class="container">
+    <div class="terminal-nav">
+        <header class="terminal-logo">
+            <div id="mkdocs-terminal-site-name" class="logo terminal-prompt"><a href="/" class="no-style">PRISM: A ROGUELIKE ENGINE</a></div>
+        </header>
+        
+        <nav class="terminal-menu">
+            
+            <ul vocab="https://schema.org/" typeof="BreadcrumbList">
+                
+                
+                <li property="itemListElement" typeof="ListItem">
+                    <a href="../.." class="menu-item " property="item" typeof="WebPage">
+                        <span property="name">Home</span>
+                    </a>
+                    <meta property="position" content="0">
+                </li>
+                
+                
+                <li property="itemListElement" typeof="ListItem">
+                    <a href="../../doc/" class="menu-item " property="item" typeof="WebPage">
+                        <span property="name">Documentation</span>
+                    </a>
+                    <meta property="position" content="1">
+                </li>
+                
+                
+                <li property="itemListElement" typeof="ListItem">
+                    <a href="../../architecture-primer/" class="menu-item " property="item" typeof="WebPage">
+                        <span property="name">Architecture Primer</span>
+                    </a>
+                    <meta property="position" content="2">
+                </li>
+                
+                
+                
+                
+                
+                    
+                    
+
+
+<li property="itemListElement" typeof="ListItem">
+    <a href="#" class="menu-item" data-toggle="modal" data-target="#mkdocs_search_modal" property="item" typeof="SearchAction">
+        <i aria-hidden="true" class="fa fa-search"></i> <span property="name">Search</span>
+    </a>
+    <meta property="position" content="3">
+</li>
+                    
+            </ul>
+            
+        </nav>
+    </div>
+</div>
+        
+    <div class="container">
+        <div class="terminal-mkdocs-main-grid"><aside id="terminal-mkdocs-side-panel"><nav>
+  
+    <ul class="terminal-mkdocs-side-nav-items">
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../..">Home</a>
+        
+    
+    
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../../doc/">Documentation</a>
+        
+    
+    
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../../architecture-primer/">Architecture Primer</a>
+        
+    
+    
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+        
+        
+
+        
+            
+    
+        
+        
+            
+            
+            <span class="
+        
+    
+
+    terminal-mkdocs-side-nav-item terminal-mkdocs-side-nav-section-no-index">Making a roguelike</span>
+        
+    
+    
+        
+      
+        
+            <ul class="terminal-mkdocs-side-nav-li-ul">
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../../making-a-roguelike-part1/">Part 01</a>
+        
+    
+    </li>
+            
+            
+    </ul>
+        
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+        
+        
+
+        
+            
+    
+        
+        <span class="
+        
+    
+
+    terminal-mkdocs-side-nav-item--active terminal-mkdocs-side-nav-section-no-index">API</span>
+    
+    
+        
+      
+        
+            <ul class="terminal-mkdocs-side-nav-li-ul">
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../action/">action</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../actiondecision/">actiondecision</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../actionmessage/">actionmessage</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../actor/">actor</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../actorstorage/">actorstorage</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../arg/">arg</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../assert/">assert</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../bitmaskbuffer/">bitmaskbuffer</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../boolean/">boolean</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../booleanbuffer/">booleanbuffer</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../boundingbox/">boundingbox</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../btconditional/">btconditional</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../btnode/">btnode</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../btroot/">btroot</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../btselector/">btselector</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../btsequence/">btsequence</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../btsucceeder/">btsucceeder</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../button/">button</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../buttonprops/">buttonprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../camera/">camera</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../cell/">cell</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../collectgarbage/">collectgarbage</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../collidercomponent/">collidercomponent</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../collideroptions/">collideroptions</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../collisionmask/">collisionmask</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../color4/">color4</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../component/">component</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../controllercomponent/">controllercomponent</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../coroutine/">coroutine</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../coroutinelib/">coroutinelib</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../debug/">debug</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../debuginfo/">debuginfo</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../debuglib/">debuglib</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../debugmessage/">debugmessage</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../decision/">decision</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../display/">display</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../distancetype/">distancetype</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../dofile/">dofile</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../drawablecomponent/">drawablecomponent</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../editor/">editor</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../editorgrid/">editorgrid</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../editorgridinit/">editorgridinit</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../editorgridprops/">editorgridprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../editorroot/">editorroot</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../editorrootprops/">editorrootprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../editorstate/">editorstate</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../ellipsemodification/">ellipsemodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../ellipsetool/">ellipsetool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../erasemodification/">erasemodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../erasetool/">erasetool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../filepanel/">filepanel</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../filepanelinit/">filepanelinit</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../filepanelprops/">filepanelprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../filetype/">filetype</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../fill/">fill</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../fraction/">fraction</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../function/">function</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../gamestate/">gamestate</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../gamestatemanager/">gamestatemanager</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../geometer/">geometer</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../grid/">grid</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../ibehavior/">ibehavior</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../keybinding/">keybinding</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../level/">level</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../levelstate/">levelstate</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../linemodification/">linemodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../linetool/">linetool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../map/">map</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../mapbuilder/">mapbuilder</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../mapgeneratorstate/">mapgeneratorstate</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../message/">message</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../modification/">modification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../neighborhood/">neighborhood</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../object/">object</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../opaquecomponent/">opaquecomponent</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../pastemodification/">pastemodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../penmodification/">penmodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../pentool/">pentool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../placeable/">placeable</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../playercontrollercomponent/">playercontrollercomponent</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../prefabeditorstate/">prefabeditorstate</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../priorityqueue/">priorityqueue</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        <span class="
+
+    terminal-mkdocs-side-nav-item--active">prism</span>
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../quadrant/">quadrant</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../queue/">queue</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../rectmodification/">rectmodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../recttool/">recttool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../rng/">rng</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../row/">row</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../scheduler/">scheduler</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../selectiongrid/">selectiongrid</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../selectiongridinit/">selectiongridinit</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../selectiongridprops/">selectiongridprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../selectionpanel/">selectionpanel</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../selectionpanelinit/">selectionpanelinit</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../selectionpanelprops/">selectionpanelprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../selecttool/">selecttool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../sensescomponent/">sensescomponent</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../sensessystem/">sensessystem</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../sensestracker/">sensestracker</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../simplescheduler/">simplescheduler</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../sparsearray/">sparsearray</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../sparsegrid/">sparsegrid</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../sparsemap/">sparsemap</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../spectrum/">spectrum</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../spectrumattachable/">spectrumattachable</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../spriteatlas/">spriteatlas</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../system/">system</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../systemmanager/">systemmanager</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../target/">target</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../textinput/">textinput</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../textinputinit/">textinputinit</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../textinputprops/">textinputprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../tileelement/">tileelement</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../tileelementprops/">tileelementprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../tool/">tool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../tools/">tools</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../toolsprops/">toolsprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../unfloatselectionmodification/">unfloatselectionmodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../vector2/">vector2</a>
+        
+    
+    </li>
+            
+            
+    </ul>
+        
+    
+  </li>
+        
+    </ul>
+  
+</nav><hr>
+<nav>
+    <ul>
+        <li><a href="#prismaction">prism.Action</a></li>
+        <li><a href="#prismactor">prism.Actor</a></li>
+        <li><a href="#prismactorstorage">prism.ActorStorage</a></li>
+        <li><a href="#prismbehaviortree">prism.BehaviorTree</a></li>
+        <li><a href="#prismbehaviortreenode">prism.BehaviorTree.Node</a></li>
+        <li><a href="#prismbehaviortreeroot">prism.BehaviorTree.Root</a></li>
+        <li><a href="#prismbehaviortreeselector">prism.BehaviorTree.Selector</a></li>
+        <li><a href="#prismbehaviortreesequence">prism.BehaviorTree.Sequence</a></li>
+        <li><a href="#prismbehaviortreesucceeder">prism.BehaviorTree.Succeeder</a></li>
+        <li><a href="#prismbitmaskbuffer">prism.BitmaskBuffer</a></li>
+        <li><a href="#prismbooleanbuffer">prism.BooleanBuffer</a></li>
+        <li><a href="#prismboundingbox">prism.BoundingBox</a></li>
+        <li><a href="#prismbreadthfirstsearch">prism.BreadthFirstSearch</a></li>
+        <li><a href="#prismbresenham">prism.Bresenham</a></li>
+        <li><a href="#prismcell">prism.Cell</a></li>
+        <li><a href="#prismcollision">prism.Collision</a></li>
+        <li><a href="#prismcolor4">prism.Color4</a></li>
+        <li><a href="#prismcomponent">prism.Component</a></li>
+        <li><a href="#prismdecision">prism.Decision</a></li>
+        <li><a href="#prismellipse">prism.Ellipse</a></li>
+        <li><a href="#prismgrid">prism.Grid</a></li>
+        <li><a href="#prismlevel">prism.Level</a></li>
+        <li><a href="#prismmap">prism.Map</a></li>
+        <li><a href="#prismmapbuilder">prism.MapBuilder</a></li>
+        <li><a href="#prismmessage">prism.Message</a></li>
+        <li><a href="#prismobject">prism.Object</a></li>
+        <li><a href="#prismpath">prism.Path</a></li>
+        <li><a href="#prismpriorityqueue">prism.PriorityQueue</a></li>
+        <li><a href="#prismqueue">prism.Queue</a></li>
+        <li><a href="#prismrng">prism.RNG</a></li>
+        <li><a href="#prismscheduler">prism.Scheduler</a></li>
+        <li><a href="#prismsimplescheduler">prism.SimpleScheduler</a></li>
+        <li><a href="#prismsparsearray">prism.SparseArray</a></li>
+        <li><a href="#prismsparsegrid">prism.SparseGrid</a></li>
+        <li><a href="#prismsparsemap">prism.SparseMap</a></li>
+        <li><a href="#prismsystem">prism.System</a></li>
+        <li><a href="#prismsystemmanager">prism.SystemManager</a></li>
+        <li><a href="#prismtarget">prism.Target</a></li>
+        <li><a href="#prismvector2">prism.Vector2</a></li>
+        <li><a href="#prism_isclass">prism._ISCLASS</a></li>
+        <li><a href="#prism_objectregistry">prism._OBJECTREGISTRY</a></li>
+        <li><a href="#prism_defaultdistance">prism._defaultDistance</a></li>
+        <li><a href="#prism_defaultrangetype">prism._defaultRangeType</a></li>
+        <li><a href="#prism_initialized">prism._initialized</a></li>
+        <li><a href="#prism_itempatterns">prism._itemPatterns</a></li>
+        <li><a href="#prism_items">prism._items</a></li>
+        <li><a href="#prismactions">prism.actions</a></li>
+        <li><a href="#prismactors">prism.actors</a></li>
+        <li><a href="#prismadvancecoroutine">prism.advanceCoroutine</a></li>
+        <li><a href="#prismastar">prism.astar</a></li>
+        <li><a href="#prismbehaviors">prism.behaviors</a></li>
+        <li><a href="#prismcells">prism.cells</a></li>
+        <li><a href="#prismcomponents">prism.components</a></li>
+        <li><a href="#prismcomponentscollider">prism.components.Collider</a></li>
+        <li><a href="#prismcomponentscontroller">prism.components.Controller</a></li>
+        <li><a href="#prismcomponentsopaque">prism.components.Opaque</a></li>
+        <li><a href="#prismcomponentsplayercontroller">prism.components.PlayerController</a></li>
+        <li><a href="#prismcomponentssenses">prism.components.Senses</a></li>
+        <li><a href="#prismcomputefov">prism.computeFOV</a></li>
+        <li><a href="#prismdecisions">prism.decisions</a></li>
+        <li><a href="#prismdecisionsactiondecision">prism.decisions.ActionDecision</a></li>
+        <li><a href="#prismfov">prism.fov</a></li>
+        <li><a href="#prismfovfraction">prism.fov.Fraction</a></li>
+        <li><a href="#prismfovquadrant">prism.fov.Quadrant</a></li>
+        <li><a href="#prismfovrow">prism.fov.Row</a></li>
+        <li><a href="#prismhotload">prism.hotload</a></li>
+        <li><a href="#prismjson">prism.json</a></li>
+        <li><a href="#prismloadmodule">prism.loadModule</a></li>
+        <li><a href="#prismmessages">prism.messages</a></li>
+        <li><a href="#prismmessagesactionmessage">prism.messages.ActionMessage</a></li>
+        <li><a href="#prismmessagesdebugmessage">prism.messages.DebugMessage</a></li>
+        <li><a href="#prismmodules">prism.modules</a></li>
+        <li><a href="#prismneighborhood">prism.neighborhood</a></li>
+        <li><a href="#prismpath_1">prism.path</a></li>
+        <li><a href="#prismrequire">prism.require</a></li>
+        <li><a href="#prismsetdefaultneighborhood">prism.setDefaultNeighborhood</a></li>
+        <li><a href="#prismsystems">prism.systems</a></li>
+        <li><a href="#prismsystemssenses">prism.systems.Senses</a></li>
+        <li><a href="#prismtargets">prism.targets</a></li>
+        <li><a href="#prismturn">prism.turn</a></li>
+        
+    </ul>
+</nav>
+</aside>
+            <main id="terminal-mkdocs-main-content">
+<section id="mkdocs-terminal-content">
+    <div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">table</span>
+</code></pre></div>
+<hr />
+<h1 id="prismaction">prism.Action</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismactor">prism.Actor</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismactorstorage">prism.ActorStorage</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismbehaviortree">prism.BehaviorTree</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">table</span>
+</code></pre></div>
+<hr />
+<h1 id="prismbehaviortreenode">prism.BehaviorTree.Node</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismbehaviortreeroot">prism.BehaviorTree.Root</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismbehaviortreeselector">prism.BehaviorTree.Selector</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismbehaviortreesequence">prism.BehaviorTree.Sequence</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismbehaviortreesucceeder">prism.BehaviorTree.Succeeder</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismbitmaskbuffer">prism.BitmaskBuffer</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismbooleanbuffer">prism.BooleanBuffer</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismboundingbox">prism.BoundingBox</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismbreadthfirstsearch">prism.BreadthFirstSearch</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismbresenham">prism.Bresenham</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismcell">prism.Cell</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismcollision">prism.Collision</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismcolor4">prism.Color4</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismcomponent">prism.Component</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismdecision">prism.Decision</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismellipse">prism.Ellipse</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismgrid">prism.Grid</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismlevel">prism.Level</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismmap">prism.Map</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismmapbuilder">prism.MapBuilder</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismmessage">prism.Message</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismobject">prism.Object</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismpath">prism.Path</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismpriorityqueue">prism.PriorityQueue</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismqueue">prism.Queue</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismrng">prism.RNG</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismscheduler">prism.Scheduler</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismsimplescheduler">prism.SimpleScheduler</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismsparsearray">prism.SparseArray</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismsparsegrid">prism.SparseGrid</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismsparsemap">prism.SparseMap</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismsystem">prism.System</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismsystemmanager">prism.SystemManager</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismtarget">prism.Target</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismvector2">prism.Vector2</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prism_isclass">prism._ISCLASS</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">table</span>
+</code></pre></div>
+<hr />
+<h1 id="prism_objectregistry">prism._OBJECTREGISTRY</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">table</span>
+</code></pre></div>
+<hr />
+<h1 id="prism_defaultdistance">prism._defaultDistance</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">string</span>
+</code></pre></div>
+<hr />
+<h1 id="prism_defaultrangetype">prism._defaultRangeType</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">string</span>
+</code></pre></div>
+<hr />
+<h1 id="prism_initialized">prism._initialized</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">boolean</span>
+</code></pre></div>
+<hr />
+<h1 id="prism_itempatterns">prism._itemPatterns</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">table</span>
+</code></pre></div>
+<hr />
+<h1 id="prism_items">prism._items</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">table</span>
+</code></pre></div>
+<hr />
+<h1 id="prismactions">prism.actions</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">table</span>
+</code></pre></div>
+<hr />
+<h1 id="prismactors">prism.actors</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">table</span>
+</code></pre></div>
+<hr />
+<h1 id="prismadvancecoroutine">prism.advanceCoroutine</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #353580; font-weight: bold">function</span><span style="color: #BBB"> </span>prism.<span style="font-weight: bold; font-style: italic">advanceCoroutine</span>(<span style="color: #2C2CFF; font-weight: bold">updateCoroutine</span>:<span style="color: #BBB"> </span>any,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">level</span>:<span style="color: #BBB"> </span>any,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">decision</span>:<span style="color: #BBB"> </span>any)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Message</span>|<span style="color: #2C2CFF; font-weight: bold">nil</span>
+</code></pre></div>
+<hr />
+<h1 id="prismastar">prism.astar</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismbehaviors">prism.behaviors</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">table</span>
+</code></pre></div>
+<hr />
+<h1 id="prismcells">prism.cells</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">table</span>
+</code></pre></div>
+<hr />
+<h1 id="prismcomponents">prism.components</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">table</span>
+</code></pre></div>
+<hr />
+<h1 id="prismcomponentscollider">prism.components.Collider</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismcomponentscontroller">prism.components.Controller</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismcomponentsopaque">prism.components.Opaque</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismcomponentsplayercontroller">prism.components.PlayerController</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismcomponentssenses">prism.components.Senses</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismcomputefov">prism.computeFOV</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismdecisions">prism.decisions</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">table</span>
+</code></pre></div>
+<hr />
+<h1 id="prismdecisionsactiondecision">prism.decisions.ActionDecision</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismfov">prism.fov</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">table</span>
+</code></pre></div>
+<hr />
+<h1 id="prismfovfraction">prism.fov.Fraction</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismfovquadrant">prism.fov.Quadrant</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismfovrow">prism.fov.Row</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismhotload">prism.hotload</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #353580; font-weight: bold">function</span><span style="color: #BBB"> </span>prism.<span style="font-weight: bold; font-style: italic">hotload</span>()
+</code></pre></div>
+<hr />
+<h1 id="prismjson">prism.json</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismloadmodule">prism.loadModule</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #353580; font-weight: bold">function</span><span style="color: #BBB"> </span>prism.<span style="font-weight: bold; font-style: italic">loadModule</span>(<span style="color: #2C2CFF; font-weight: bold">directory</span>:<span style="color: #BBB"> </span>any)
+</code></pre></div>
+<hr />
+<h1 id="prismmessages">prism.messages</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">table</span>
+</code></pre></div>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">table</span>
+</code></pre></div>
+<hr />
+<h1 id="prismmessagesactionmessage">prism.messages.ActionMessage</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismmessagesdebugmessage">prism.messages.DebugMessage</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismmodules">prism.modules</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">table</span>
+</code></pre></div>
+<hr />
+<h1 id="prismneighborhood">prism.neighborhood</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">Vector2</span>[]
+</code></pre></div>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">Vector2</span>[]
+</code></pre></div>
+<hr />
+<h1 id="prismpath_1">prism.path</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismrequire">prism.require</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #353580; font-weight: bold">function</span><span style="color: #BBB"> </span>prism.<span style="font-weight: bold; font-style: italic">require</span>(<span style="color: #2C2CFF; font-weight: bold">p</span>:<span style="color: #BBB"> </span>any)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+<span style="color: #BBB">  </span><span style="color: #2C8553; font-weight: bold">2.</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">nil</span>
+</code></pre></div>
+<hr />
+<h1 id="prismsetdefaultneighborhood">prism.setDefaultNeighborhood</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #353580; font-weight: bold">function</span><span style="color: #BBB"> </span>prism.<span style="font-weight: bold; font-style: italic">setDefaultNeighborhood</span>(<span style="color: #2C2CFF; font-weight: bold">neighborhood</span>:<span style="color: #BBB"> </span>Vector2[])
+</code></pre></div>
+<hr />
+<h1 id="prismsystems">prism.systems</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">table</span>
+</code></pre></div>
+<hr />
+<h1 id="prismsystemssenses">prism.systems.Senses</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<hr />
+<h1 id="prismtargets">prism.targets</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">table</span>
+</code></pre></div>
+<hr />
+<h1 id="prismturn">prism.turn</h1>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #353580; font-weight: bold">function</span><span style="color: #BBB"> </span>prism.<span style="font-weight: bold; font-style: italic">turn</span>(<span style="color: #2C2CFF; font-weight: bold">level</span>:<span style="color: #BBB"> </span>Level,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">actor</span>:<span style="color: #BBB"> </span>Actor,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">controller</span>:<span style="color: #BBB"> </span>ControllerComponent)
+</code></pre></div>
+<hr />
+</section>
+
+            </main>
+        </div>
+        <hr><footer>
+    <div class="terminal-mkdocs-footer-grid">
+        <div id="terminal-mkdocs-footer-copyright-info">
+             Site built with <a href="http://www.mkdocs.org">MkDocs</a> and <a href="https://github.com/ntno/mkdocs-terminal">Terminal for MkDocs</a>.
+        </div>
+    </div>
+</footer>
+    </div>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="alertdialog" aria-modal="true" aria-labelledby="searchModalLabel">
+    <div class="modal-dialog modal-lg" role="search">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="searchModalLabel">Search</h5>
+                <button type="button" class="close btn btn-default btn-ghost" data-dismiss="modal"><span aria-hidden="true">x</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p id="searchInputLabel">Type to start searching</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" aria-labelledby="searchInputLabel" placeholder="" id="mkdocs-search-query" title="Please enter search terms here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No document matches found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+</body>
+
+</html>

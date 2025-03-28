@@ -1,0 +1,2685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="generator" content="mkdocs-1.6.1, mkdocs-terminal-4.7.0">
+     
+     
+    <link rel="icon" type="image/png" sizes="192x192" href="../../img/android-chrome-192x192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="../../img/android-chrome-512x512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="../../img/apple-touch-icon.png" />
+<link rel="shortcut icon" type="image/png" sizes="48x48" href="../../img/favicon.ico" />
+<link rel="icon" type="image/png" sizes="16x16" href="../../img/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="../../img/favicon-32x32.png" />
+
+
+    
+ 
+<title>level - PRISM: A ROGUELIKE ENGINE</title>
+
+
+<link href="../../css/fontawesome/css/fontawesome.min.css" rel="stylesheet">
+<link href="../../css/fontawesome/css/solid.min.css" rel="stylesheet">
+<link href="../../css/normalize.css" rel="stylesheet">
+<link href="../../css/terminal.css" rel="stylesheet">
+<link href="../../css/theme.css" rel="stylesheet">
+<link href="../../css/theme.tile_grid.css" rel="stylesheet">
+<link href="../../css/theme.footer.css" rel="stylesheet">
+<!-- default color palette -->
+<link href="../../css/palettes/default.css" rel="stylesheet">
+
+<!-- page layout -->
+<style>
+/* initially set page layout to a one column grid */
+.terminal-mkdocs-main-grid {
+    display: grid;
+    grid-column-gap: 1.4em;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+}
+
+/*  
+*   when side navigation is not hidden, use a two column grid.  
+*   if the screen is too narrow, fall back to the initial one column grid layout.
+*   in this case the main content will be placed under the navigation panel. 
+*/
+@media only screen and (min-width: 70em) {
+    .terminal-mkdocs-main-grid {
+        grid-template-columns: 4fr 9fr;
+    }
+}</style>
+
+
+
+     
+    
+    
+
+    
+    <!-- search css support -->
+<link href="../../css/search/bootstrap-modal.css" rel="stylesheet">
+<!-- search scripts -->
+<script>
+    var base_url = "../..",
+    shortcuts = "{}";
+</script>
+<script src="../../js/jquery/jquery-1.10.1.min.js" defer></script>
+<script src="../../js/bootstrap/bootstrap.min.js" defer></script>
+<script src="../../js/mkdocs/base.js" defer></script>
+    
+    
+    
+    
+    <script src="../../search/main.js"></script>
+    
+
+    
+</head>
+
+<body class="terminal"><div class="container">
+    <div class="terminal-nav">
+        <header class="terminal-logo">
+            <div id="mkdocs-terminal-site-name" class="logo terminal-prompt"><a href="/" class="no-style">PRISM: A ROGUELIKE ENGINE</a></div>
+        </header>
+        
+        <nav class="terminal-menu">
+            
+            <ul vocab="https://schema.org/" typeof="BreadcrumbList">
+                
+                
+                <li property="itemListElement" typeof="ListItem">
+                    <a href="../.." class="menu-item " property="item" typeof="WebPage">
+                        <span property="name">Home</span>
+                    </a>
+                    <meta property="position" content="0">
+                </li>
+                
+                
+                <li property="itemListElement" typeof="ListItem">
+                    <a href="../../doc/" class="menu-item " property="item" typeof="WebPage">
+                        <span property="name">Documentation</span>
+                    </a>
+                    <meta property="position" content="1">
+                </li>
+                
+                
+                <li property="itemListElement" typeof="ListItem">
+                    <a href="../../architecture-primer/" class="menu-item " property="item" typeof="WebPage">
+                        <span property="name">Architecture Primer</span>
+                    </a>
+                    <meta property="position" content="2">
+                </li>
+                
+                
+                
+                
+                
+                    
+                    
+
+
+<li property="itemListElement" typeof="ListItem">
+    <a href="#" class="menu-item" data-toggle="modal" data-target="#mkdocs_search_modal" property="item" typeof="SearchAction">
+        <i aria-hidden="true" class="fa fa-search"></i> <span property="name">Search</span>
+    </a>
+    <meta property="position" content="3">
+</li>
+                    
+            </ul>
+            
+        </nav>
+    </div>
+</div>
+        
+    <div class="container">
+        <div class="terminal-mkdocs-main-grid"><aside id="terminal-mkdocs-side-panel"><nav>
+  
+    <ul class="terminal-mkdocs-side-nav-items">
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../..">Home</a>
+        
+    
+    
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../../doc/">Documentation</a>
+        
+    
+    
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../../architecture-primer/">Architecture Primer</a>
+        
+    
+    
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+        
+        
+
+        
+            
+    
+        
+        
+            
+            
+            <span class="
+        
+    
+
+    terminal-mkdocs-side-nav-item terminal-mkdocs-side-nav-section-no-index">Making a roguelike</span>
+        
+    
+    
+        
+      
+        
+            <ul class="terminal-mkdocs-side-nav-li-ul">
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../../making-a-roguelike-part1/">Part 01</a>
+        
+    
+    </li>
+            
+            
+    </ul>
+        
+    
+  </li>
+        
+          
+
+
+
+<li class="terminal-mkdocs-side-nav-li">
+    
+    
+        
+        
+
+        
+            
+    
+        
+        <span class="
+        
+    
+
+    terminal-mkdocs-side-nav-item--active terminal-mkdocs-side-nav-section-no-index">API</span>
+    
+    
+        
+      
+        
+            <ul class="terminal-mkdocs-side-nav-li-ul">
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../action/">action</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../actiondecision/">actiondecision</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../actionmessage/">actionmessage</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../actor/">actor</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../actorstorage/">actorstorage</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../arg/">arg</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../assert/">assert</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../bitmaskbuffer/">bitmaskbuffer</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../boolean/">boolean</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../booleanbuffer/">booleanbuffer</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../boundingbox/">boundingbox</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../btconditional/">btconditional</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../btnode/">btnode</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../btroot/">btroot</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../btselector/">btselector</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../btsequence/">btsequence</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../btsucceeder/">btsucceeder</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../button/">button</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../buttonprops/">buttonprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../camera/">camera</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../cell/">cell</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../collectgarbage/">collectgarbage</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../collidercomponent/">collidercomponent</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../collideroptions/">collideroptions</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../collisionmask/">collisionmask</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../color4/">color4</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../component/">component</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../controllercomponent/">controllercomponent</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../coroutine/">coroutine</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../coroutinelib/">coroutinelib</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../debug/">debug</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../debuginfo/">debuginfo</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../debuglib/">debuglib</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../debugmessage/">debugmessage</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../decision/">decision</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../display/">display</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../distancetype/">distancetype</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../dofile/">dofile</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../drawablecomponent/">drawablecomponent</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../editor/">editor</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../editorgrid/">editorgrid</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../editorgridinit/">editorgridinit</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../editorgridprops/">editorgridprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../editorroot/">editorroot</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../editorrootprops/">editorrootprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../editorstate/">editorstate</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../ellipsemodification/">ellipsemodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../ellipsetool/">ellipsetool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../erasemodification/">erasemodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../erasetool/">erasetool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../filepanel/">filepanel</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../filepanelinit/">filepanelinit</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../filepanelprops/">filepanelprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../filetype/">filetype</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../fill/">fill</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../fraction/">fraction</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../function/">function</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../gamestate/">gamestate</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../gamestatemanager/">gamestatemanager</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../geometer/">geometer</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../grid/">grid</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../ibehavior/">ibehavior</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../keybinding/">keybinding</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        <span class="
+
+    terminal-mkdocs-side-nav-item--active">level</span>
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../levelstate/">levelstate</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../linemodification/">linemodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../linetool/">linetool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../map/">map</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../mapbuilder/">mapbuilder</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../mapgeneratorstate/">mapgeneratorstate</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../message/">message</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../modification/">modification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../neighborhood/">neighborhood</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../object/">object</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../opaquecomponent/">opaquecomponent</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../pastemodification/">pastemodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../penmodification/">penmodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../pentool/">pentool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../placeable/">placeable</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../playercontrollercomponent/">playercontrollercomponent</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../prefabeditorstate/">prefabeditorstate</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../priorityqueue/">priorityqueue</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../prism/">prism</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../quadrant/">quadrant</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../queue/">queue</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../rectmodification/">rectmodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../recttool/">recttool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../rng/">rng</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../row/">row</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../scheduler/">scheduler</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../selectiongrid/">selectiongrid</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../selectiongridinit/">selectiongridinit</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../selectiongridprops/">selectiongridprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../selectionpanel/">selectionpanel</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../selectionpanelinit/">selectionpanelinit</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../selectionpanelprops/">selectionpanelprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../selecttool/">selecttool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../sensescomponent/">sensescomponent</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../sensessystem/">sensessystem</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../sensestracker/">sensestracker</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../simplescheduler/">simplescheduler</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../sparsearray/">sparsearray</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../sparsegrid/">sparsegrid</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../sparsemap/">sparsemap</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../spectrum/">spectrum</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../spectrumattachable/">spectrumattachable</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../spriteatlas/">spriteatlas</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../system/">system</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../systemmanager/">systemmanager</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../target/">target</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../textinput/">textinput</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../textinputinit/">textinputinit</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../textinputprops/">textinputprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../tileelement/">tileelement</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../tileelementprops/">tileelementprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../tool/">tool</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../tools/">tools</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../toolsprops/">toolsprops</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../unfloatselectionmodification/">unfloatselectionmodification</a>
+        
+    
+    </li>
+            
+        
+            
+            
+
+             
+                <li class="terminal-mkdocs-side-nav-li-ul-li">
+    
+        
+        
+            <a class="
+
+    terminal-mkdocs-side-nav-item" href="../vector2/">vector2</a>
+        
+    
+    </li>
+            
+            
+    </ul>
+        
+    
+  </li>
+        
+    </ul>
+  
+</nav><hr>
+<nav>
+    <ul>
+        <li><a href="#rng">RNG</a></li>
+        <li><a href="#__call">__call</a></li>
+        <li><a href="#__index">__index</a></li>
+        <li><a href="#__new">__new</a></li>
+        <li><a href="#_serializationblacklist">_serializationBlacklist</a></li>
+        <li><a href="#actorstorage">actorStorage</a></li>
+        <li><a href="#addactor">addActor</a></li>
+        <li><a href="#addcomponent">addComponent</a></li>
+        <li><a href="#addsystem">addSystem</a></li>
+        <li><a href="#adopt">adopt</a></li>
+        <li><a href="#classname">className</a></li>
+        <li><a href="#computefov">computeFOV</a></li>
+        <li><a href="#debug">debug</a></li>
+        <li><a href="#debugyield">debugYield</a></li>
+        <li><a href="#decision">decision</a></li>
+        <li><a href="#deserialize">deserialize</a></li>
+        <li><a href="#eachactor">eachActor</a></li>
+        <li><a href="#eachactorat">eachActorAt</a></li>
+        <li><a href="#eachcell">eachCell</a></li>
+        <li><a href="#extend">extend</a></li>
+        <li><a href="#findpath">findPath</a></li>
+        <li><a href="#getaoe">getAOE</a></li>
+        <li><a href="#getactorbytype">getActorByType</a></li>
+        <li><a href="#getactorcontroller">getActorController</a></li>
+        <li><a href="#getactorsat">getActorsAt</a></li>
+        <li><a href="#getcell">getCell</a></li>
+        <li><a href="#getcellopaque">getCellOpaque</a></li>
+        <li><a href="#getcellpassable">getCellPassable</a></li>
+        <li><a href="#getid">getID</a></li>
+        <li><a href="#getopacitycache">getOpacityCache</a></li>
+        <li><a href="#getsystem">getSystem</a></li>
+        <li><a href="#hasactor">hasActor</a></li>
+        <li><a href="#inbounds">inBounds</a></li>
+        <li><a href="#initialize">initialize</a></li>
+        <li><a href="#initializeopacitycache">initializeOpacityCache</a></li>
+        <li><a href="#initializepassabilitycache">initializePassabilityCache</a></li>
+        <li><a href="#instanceof">instanceOf</a></li>
+        <li><a href="#is">is</a></li>
+        <li><a href="#map">map</a></li>
+        <li><a href="#mixin">mixin</a></li>
+        <li><a href="#moveactor">moveActor</a></li>
+        <li><a href="#ondeserialize">onDeserialize</a></li>
+        <li><a href="#opacitycache">opacityCache</a></li>
+        <li><a href="#passablecache">passableCache</a></li>
+        <li><a href="#performaction">performAction</a></li>
+        <li><a href="#prettyprint">prettyprint</a></li>
+        <li><a href="#removeactor">removeActor</a></li>
+        <li><a href="#removecomponent">removeComponent</a></li>
+        <li><a href="#run">run</a></li>
+        <li><a href="#scheduler">scheduler</a></li>
+        <li><a href="#serializationblacklist">serializationBlacklist</a></li>
+        <li><a href="#serialize">serialize</a></li>
+        <li><a href="#setcell">setCell</a></li>
+        <li><a href="#sparsemapcallback">sparseMapCallback</a></li>
+        <li><a href="#step">step</a></li>
+        <li><a href="#stripname">stripName</a></li>
+        <li><a href="#systemmanager">systemManager</a></li>
+        <li><a href="#trigger">trigger</a></li>
+        <li><a href="#updatecaches">updateCaches</a></li>
+        <li><a href="#updateopacitycache">updateOpacityCache</a></li>
+        <li><a href="#updatepassabilitycache">updatePassabilityCache</a></li>
+        <li><a href="#yield">yield</a></li>
+        
+    </ul>
+</nav>
+</aside>
+            <main id="terminal-mkdocs-main-content">
+<section id="mkdocs-terminal-content">
+    <h3 id="rng">RNG</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">RNG</span>
+</code></pre></div>
+<p>The level's local random number generator, use this for randomness within the level like attack rolls.</p>
+<h3 id="__call">__call</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #353580; font-weight: bold">function</span>
+</code></pre></div>
+<h3 id="__index">__index</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">Object</span>
+</code></pre></div>
+<p>A simple class system for Lua. This is the base class for all other classes in PRISM.</p>
+<h3 id="__new">__new</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">__new</span>(<span style="color: #2C2CFF; font-weight: bold">map</span>:<span style="color: #BBB"> </span>Map,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">actors</span>:<span style="color: #BBB"> </span><span style="color: #A61717; background-color: #E3D2D2">[</span>Actor],<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">systems</span>:<span style="color: #BBB"> </span><span style="color: #A61717; background-color: #E3D2D2">[</span>System],<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">scheduler</span>:<span style="color: #BBB"> </span>any,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">seed</span>:<span style="color: #BBB"> </span>any)
+</code></pre></div>
+<p>Constructor for the Level class.</p>
+<p>@<em>param</em> <code>map</code> — The map to use for the level.</p>
+<p>@<em>param</em> <code>actors</code> — A list of actors to</p>
+<h3 id="_serializationblacklist">_serializationBlacklist</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">table</span>
+</code></pre></div>
+<h3 id="actorstorage">actorStorage</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">ActorStorage</span>
+</code></pre></div>
+<p>The main actor storage containing all of the level's actors.</p>
+<h3 id="addactor">addActor</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">addActor</span>(<span style="color: #2C2CFF; font-weight: bold">actor</span>:<span style="color: #BBB"> </span>Actor)
+</code></pre></div>
+<p>Adds an actor to the level. Handles updating the component cache and
+ inserting the actor into the sparse map. It will also add the actor to the
+ scheduler if it has a controller.</p>
+<p>@<em>param</em> <code>actor</code> — The actor to add.</p>
+<h3 id="addcomponent">addComponent</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">addComponent</span>(<span style="color: #2C2CFF; font-weight: bold">actor</span>:<span style="color: #BBB"> </span>Actor,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">component</span>:<span style="color: #BBB"> </span>Component)
+</code></pre></div>
+<p>Adds a component to an actor. It handles updating
+ the component cache and the opacity cache. You can do this manually, but
+ it's easier to use this function.</p>
+<p>@<em>param</em> <code>actor</code> — The actor to add the component to.</p>
+<p>@<em>param</em> <code>component</code> — The component to add.</p>
+<h3 id="addsystem">addSystem</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">addSystem</span>(<span style="color: #2C2CFF; font-weight: bold">system</span>:<span style="color: #BBB"> </span>System)
+</code></pre></div>
+<p>Attaches a system to the level. This function will error if the system
+ doesn't have a name or if a system with the same name already exists, or if
+ the system has a requirement that hasn't been attached yet.</p>
+<p>@<em>param</em> <code>system</code> — The system to add.</p>
+<h3 id="adopt">adopt</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Object</span>:<span style="font-weight: bold; font-style: italic">adopt</span>(<span style="color: #2C2CFF; font-weight: bold">o</span>:<span style="color: #BBB"> </span>any)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<h3 id="classname">className</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">string</span>
+</code></pre></div>
+<p>A unique name for this class. By convention this should match the annotation name you use.</p>
+<h3 id="computefov">computeFOV</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">computeFOV</span>(<span style="color: #2C2CFF; font-weight: bold">origin</span>:<span style="color: #BBB"> </span>any,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">maxDepth</span>:<span style="color: #BBB"> </span>any,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">callback</span>:<span style="color: #BBB"> </span>any)
+</code></pre></div>
+<h3 id="debug">debug</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">boolean</span>
+</code></pre></div>
+<h3 id="debugyield">debugYield</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">debugYield</span>(<span style="color: #2C2CFF; font-weight: bold">stringMessage</span>:<span style="color: #BBB"> </span>any)
+</code></pre></div>
+<h3 id="decision">decision</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">ActionDecision</span>
+</code></pre></div>
+<p>Used during deserialization to resume.</p>
+<h3 id="deserialize">deserialize</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #353580; font-weight: bold">function</span><span style="color: #BBB"> </span>Object.<span style="font-weight: bold; font-style: italic">deserialize</span>(<span style="color: #2C2CFF; font-weight: bold">data</span>:<span style="color: #BBB"> </span>any)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">unknown</span>
+</code></pre></div>
+<h3 id="eachactor">eachActor</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">eachActor</span>(...<span style="color: #2C2CFF; font-weight: bold">Component</span>)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">An</span>:<span style="color: #BBB"> </span>function
+</code></pre></div>
+<p>This method returns an iterator that will return all actors in the level
+ that have the given components. If no components are given it iterate over
+ all actors. A thin wrapper over the inner ActorStorage.</p>
+<p>@<em>param</em> <code>...</code> — The components to filter by.</p>
+<p>@<em>return</em> <code>An</code> — iterator that returns the next actor that matches the given components.</p>
+<h3 id="eachactorat">eachActorAt</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">eachActorAt</span>(<span style="color: #2C2CFF; font-weight: bold">x</span>:<span style="color: #BBB"> </span>number,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">y</span>:<span style="color: #BBB"> </span>number)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">iter</span>:<span style="color: #BBB"> </span>function
+</code></pre></div>
+<p>Returns an iterator that will return all actors at the given position.</p>
+<p>@<em>param</em> <code>x</code> — The x component of the position to check.</p>
+<p>@<em>param</em> <code>y</code> — The y component of the position to check.</p>
+<p>@<em>return</em> <code>iter</code> — An iterator that returns the next actor at the given position.</p>
+<h3 id="eachcell">eachCell</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">eachCell</span>()
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="font-weight: bold; font-style: italic">fun</span>():<span style="color: #2C2CFF; font-weight: bold">number</span>,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">number</span>,<span style="color: #BBB"> </span>&lt;<span style="color: #2C2CFF; font-weight: bold">T</span>&gt;
+</code></pre></div>
+<h3 id="extend">extend</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Object</span>:<span style="font-weight: bold; font-style: italic">extend</span>(<span style="color: #2C2CFF; font-weight: bold">className</span>:<span style="color: #BBB"> </span>string,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">ignoreclassName</span><span style="color: #A61717; background-color: #E3D2D2">?</span>:<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">boolean</span>)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">prototype</span>:<span style="color: #BBB"> </span><span style="color: #A61717; background-color: #E3D2D2">&lt;</span>T&gt;
+</code></pre></div>
+<p>Creates a new class and sets its metatable to the extended class.</p>
+<p>@<em>param</em> <code>className</code> — name for the class</p>
+<p>@<em>param</em> <code>ignoreclassName</code> — if true, skips the uniqueness check in prism's registry</p>
+<p>@<em>return</em> <code>prototype</code> — The new class prototype extended from this one.</p>
+<h3 id="findpath">findPath</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">findPath</span>(<span style="color: #2C2CFF; font-weight: bold">startPos</span>:<span style="color: #BBB"> </span>Vector2,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">goalPos</span>:<span style="color: #BBB"> </span>Vector2,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">minDistance</span>:<span style="color: #BBB"> </span>any,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">mask</span>:<span style="color: #BBB"> </span>any)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Path</span>|<span style="color: #2C2CFF; font-weight: bold">nil</span>
+</code></pre></div>
+<p>Finds a path from startpos to endpos</p>
+<h3 id="getaoe">getAOE</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">getAOE</span>(<span style="color: #2C2CFF">type</span>:<span style="color: #BBB"> </span><span style="color: #800080">&quot;box&quot;</span>|<span style="color: #800080">&quot;fov&quot;</span>,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">position</span>:<span style="color: #BBB"> </span>Vector2,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">range</span>:<span style="color: #BBB"> </span>number)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">actors</span>:<span style="color: #BBB"> </span>table<span style="color: #A61717; background-color: #E3D2D2">?</span>
+<span style="color: #BBB">  </span><span style="color: #2C8553; font-weight: bold">2.</span><span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">fov</span>:<span style="color: #BBB"> </span>table<span style="color: #A61717; background-color: #E3D2D2">?</span>
+</code></pre></div>
+<p>Returns a list of all actors that are within the given range of the given
+ position. The type parameter determines the type of range to use. Currently
+ only "fov" and "box" are supported. The fov type uses a field of view
+ algorithm to determine what actors are visible from the given position. The
+ box type uses a simple box around the given position.</p>
+<p>@<em>param</em> <code>type</code> — The type of range to use.</p>
+<p>@<em>param</em> <code>position</code> — The position to check from.</p>
+<p>@<em>param</em> <code>range</code> — The range to check.</p>
+<p>@<em>return</em> <code>actors</code></p>
+<p>@<em>return</em> <code>fov</code> — A list of actors within the given range.</p>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF">type</span>:
+<span style="color: #BBB">    </span>|<span style="color: #BBB"> </span><span style="color: #800080">&quot;box&quot;</span>
+<span style="color: #BBB">    </span>|<span style="color: #BBB"> </span><span style="color: #800080">&quot;fov&quot;</span>
+</code></pre></div>
+<h3 id="getactorbytype">getActorByType</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">getActorByType</span>(<span style="color: #2C2CFF; font-weight: bold">prototype</span>:<span style="color: #BBB"> </span>Actor)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">The</span>:<span style="color: #BBB"> </span>Actor|<span style="color: #2C2CFF; font-weight: bold">nil</span>
+</code></pre></div>
+<p>Returns the first actor that extends the given prototype, or nil if no actor
+ is found. Useful for one offs like stairs in some games.</p>
+<p>@<em>param</em> <code>prototype</code> — The prototype to check for.</p>
+<p>@<em>return</em> <code>The</code> — first actor that extends the given prototype, or nil if no actor is found.</p>
+<h3 id="getactorcontroller">getActorController</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">getActorController</span>(<span style="color: #2C2CFF; font-weight: bold">actor</span>:<span style="color: #BBB"> </span>Actor)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">controller</span>:<span style="color: #BBB"> </span>ControllerComponent
+</code></pre></div>
+<p>Gets the actor's controller. This is a utility function that checks the
+ actor's conditions for an override controller and returns it if it exists.
+ Otherwise it returns the actor's normal controller.</p>
+<p>@<em>param</em> <code>actor</code> — The actor to get the controller for.</p>
+<p>@<em>return</em> <code>controller</code> — The actor's controller.</p>
+<h3 id="getactorsat">getActorsAt</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">getActorsAt</span>(<span style="color: #2C2CFF; font-weight: bold">x</span>:<span style="color: #BBB"> </span>number,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">y</span>:<span style="color: #BBB"> </span>number)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">A</span>:<span style="color: #BBB"> </span>table
+</code></pre></div>
+<p>Returns a list of all actors at the given position. A thin wrapper over
+ the inner ActorStorage.</p>
+<p>@<em>param</em> <code>x</code> — The x component of the position to check.</p>
+<p>@<em>param</em> <code>y</code> — The y component of the position to check.</p>
+<p>@<em>return</em> <code>A</code> — list of all actors at the given position.</p>
+<h3 id="getcell">getCell</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">getCell</span>(<span style="color: #2C2CFF; font-weight: bold">x</span>:<span style="color: #BBB"> </span>number,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">y</span>:<span style="color: #BBB"> </span>number)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">The</span>:<span style="color: #BBB"> </span>Cell
+</code></pre></div>
+<p>Gets the cell at the given position.</p>
+<p>@<em>param</em> <code>x</code> — The x component of the position to get.</p>
+<p>@<em>param</em> <code>y</code> — The y component of the position to get.</p>
+<p>@<em>return</em> <code>The</code> — cell at the given position.</p>
+<h3 id="getcellopaque">getCellOpaque</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">getCellOpaque</span>(<span style="color: #2C2CFF; font-weight: bold">x</span>:<span style="color: #BBB"> </span>number,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">y</span>:<span style="color: #BBB"> </span>number)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">True</span>:<span style="color: #BBB"> </span>boolean
+</code></pre></div>
+<p>Returns true if the cell at the given position is opaque, false otherwise.</p>
+<p>@<em>param</em> <code>x</code> — The x component of the position to check.</p>
+<p>@<em>param</em> <code>y</code> — The y component of the position to check.</p>
+<p>@<em>return</em> <code>True</code> — if the cell is opaque, false otherwise.</p>
+<h3 id="getcellpassable">getCellPassable</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">getCellPassable</span>(<span style="color: #2C2CFF; font-weight: bold">x</span>:<span style="color: #BBB"> </span>number,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">y</span>:<span style="color: #BBB"> </span>number,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">mask</span>:<span style="color: #BBB"> </span>integer)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">True</span>:<span style="color: #BBB"> </span>boolean
+</code></pre></div>
+<p>Returns true if the cell at the given position is passable, false otherwise. Considers
+ actors in the sparse map as well as the cell's passable property.</p>
+<p>@<em>param</em> <code>x</code> — The x component of the position to check.</p>
+<p>@<em>param</em> <code>y</code> — The y component of the position to check.</p>
+<p>@<em>return</em> <code>True</code> — if the cell is passable, false otherwise.</p>
+<h3 id="getid">getID</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">getID</span>(<span style="color: #2C2CFF; font-weight: bold">actor</span>:<span style="color: #BBB"> </span>Actor)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">The</span>:<span style="color: #BBB"> </span>integer<span style="color: #A61717; background-color: #E3D2D2">?</span>
+</code></pre></div>
+<p>Retrieves the unique ID associated with the specified actor.
+ Note: IDs are unique to actors within the Level but may be reused 
+ when indices are freed.</p>
+<p>@<em>param</em> <code>actor</code> — The actor whose ID is to be retrieved.</p>
+<p>@<em>return</em> <code>The</code> — unique ID of the actor, or nil if the actor is not found.</p>
+<h3 id="getopacitycache">getOpacityCache</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">getOpacityCache</span>()
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">map</span>:<span style="color: #BBB"> </span>BooleanBuffer
+</code></pre></div>
+<p>Returns the opacity cache for the level. This generally shouldn't be used
+ outside of systems that need to know about opacity.</p>
+<p>@<em>return</em> <code>map</code> — The opacity cache for the level.</p>
+<h3 id="getsystem">getSystem</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">getSystem</span>(<span style="color: #2C2CFF; font-weight: bold">className</span>:<span style="color: #BBB"> </span>string)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">system</span>:<span style="color: #BBB"> </span>System<span style="color: #A61717; background-color: #E3D2D2">?</span>
+</code></pre></div>
+<p>Gets a system by name.</p>
+<p>@<em>param</em> <code>className</code> — The name of the system to get.</p>
+<p>@<em>return</em> <code>system</code> — The system with the given name.</p>
+<h3 id="hasactor">hasActor</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">hasActor</span>(<span style="color: #2C2CFF; font-weight: bold">actor</span>:<span style="color: #BBB"> </span>Actor)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">hasActor</span>:<span style="color: #BBB"> </span>boolean
+</code></pre></div>
+<p>Returns true if the level contains the given actor, false otherwise. A thin wrapper
+ over the inner ActorStorage.</p>
+<p>@<em>param</em> <code>actor</code> — The actor to check for.</p>
+<p>@<em>return</em> <code>hasActor</code> — True if the level contains the given actor, false otherwise.</p>
+<h3 id="inbounds">inBounds</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">inBounds</span>(<span style="color: #2C2CFF; font-weight: bold">x</span>:<span style="color: #BBB"> </span>integer,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">y</span>:<span style="color: #BBB"> </span>integer)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">boolean</span>
+</code></pre></div>
+<p>Is there a cell at this x, y? Part of the interface with MapBuilder</p>
+<p>@<em>param</em> <code>x</code> — The x component to check if in bounds.</p>
+<h3 id="initialize">initialize</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">initialize</span>(<span style="color: #2C2CFF; font-weight: bold">actors</span>:<span style="color: #BBB"> </span><span style="color: #A61717; background-color: #E3D2D2">[</span>Actor],<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">systems</span>:<span style="color: #BBB"> </span><span style="color: #A61717; background-color: #E3D2D2">[</span>System])
+</code></pre></div>
+<h3 id="initializeopacitycache">initializeOpacityCache</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">initializeOpacityCache</span>()
+</code></pre></div>
+<p>Initialize the opacity cache. This should be called after the level is
+ created and before the game loop starts. It will initialize the opacity
+ cache with the cell opacity cache. This is handled automatically by the
+ Level class.</p>
+<h3 id="initializepassabilitycache">initializePassabilityCache</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">initializePassabilityCache</span>()
+</code></pre></div>
+<p>Initialize the passable cache. This should be called after the level is
+ created and before the game loop starts. It will initialize the passable
+ cache with the cell passable cache. This is handled automatically by the
+ Level class.</p>
+<h3 id="instanceof">instanceOf</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Object</span>:<span style="font-weight: bold; font-style: italic">instanceOf</span>(<span style="color: #2C2CFF; font-weight: bold">o</span>:<span style="color: #BBB"> </span>table)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">extends</span>:<span style="color: #BBB"> </span>boolean
+</code></pre></div>
+<p>Checks if o is the first class in the inheritance chain of self.</p>
+<p>@<em>param</em> <code>o</code> — The class to check.</p>
+<p>@<em>return</em> <code>extends</code> — True if o is the first class in the inheritance chain of self, false otherwise.</p>
+<h3 id="is">is</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Object</span>:<span style="font-weight: bold; font-style: italic">is</span>(<span style="color: #2C2CFF; font-weight: bold">o</span>:<span style="color: #BBB"> </span>table)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">is</span>:<span style="color: #BBB"> </span>boolean
+</code></pre></div>
+<p>Checks if o is in the inheritance chain of self.</p>
+<p>@<em>param</em> <code>o</code> — The class to check.</p>
+<p>@<em>return</em> <code>is</code> — True if o is in the inheritance chain of self, false otherwise.</p>
+<h3 id="map">map</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">Map</span>
+</code></pre></div>
+<p>The level's map.</p>
+<h3 id="mixin">mixin</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Object</span>:<span style="font-weight: bold; font-style: italic">mixin</span>(<span style="color: #2C2CFF; font-weight: bold">mixin</span>:<span style="color: #BBB"> </span>table)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Object</span>
+</code></pre></div>
+<p>Mixes in methods and properties from another table, excluding blacklisted metamethods.
+ THis does not deep copy or merge tables, currently. It's a shallow mixin.</p>
+<p>@<em>param</em> <code>mixin</code> — The table containing methods and properties to mix in.</p>
+<h3 id="moveactor">moveActor</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">moveActor</span>(<span style="color: #2C2CFF; font-weight: bold">actor</span>:<span style="color: #BBB"> </span>Actor,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">pos</span>:<span style="color: #BBB"> </span>Vector2,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">skipSparseMap</span>:<span style="color: #BBB"> </span>boolean)
+</code></pre></div>
+<p>Moves an actor to the given position. This function doesn't do any checking
+ for overlaps or collisions. It's used by the moveActorChecked function, you should
+ generally not invoke this yourself using moveActorChecked instead.</p>
+<p>@<em>param</em> <code>actor</code> — The actor to move.</p>
+<p>@<em>param</em> <code>pos</code> — The position to move the actor to.</p>
+<p>@<em>param</em> <code>skipSparseMap</code> — If true the sparse map won't be updated.</p>
+<h3 id="ondeserialize">onDeserialize</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">onDeserialize</span>()
+</code></pre></div>
+<h3 id="opacitycache">opacityCache</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">BooleanBuffer</span>
+</code></pre></div>
+<p>A cache of cell opacity || actor opacity for each cell. Used to speed up fov/lighting calculations.</p>
+<h3 id="passablecache">passableCache</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">BitmaskBuffer</span>
+</code></pre></div>
+<p>A cache of cell passability || actor passability for each cell. Used to speed up pathfinding.</p>
+<h3 id="performaction">performAction</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">performAction</span>(<span style="color: #2C2CFF; font-weight: bold">action</span>:<span style="color: #BBB"> </span>Action,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">silent</span><span style="color: #A61717; background-color: #E3D2D2">?</span>:<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">boolean</span>)
+</code></pre></div>
+<p>Executes an Action, updating the level's state and triggering any events through the systems
+ attached to the Actor or Level respectively. It also updates the 'Scheduler' if the action isn't
+ a reaction or free action. Lastly, it calls the 'onAction' method on the 'Cell' that the 'Actor' is
+ standing on.</p>
+<p>@<em>param</em> <code>action</code> — The action to perform.</p>
+<p>@<em>param</em> <code>silent</code> — If true this action emits no events.</p>
+<h3 id="prettyprint">prettyprint</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #353580; font-weight: bold">function</span><span style="color: #BBB"> </span>Object.<span style="font-weight: bold; font-style: italic">prettyprint</span>(<span style="color: #2C2CFF; font-weight: bold">obj</span>:<span style="color: #BBB"> </span>table,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">indent</span>:<span style="color: #BBB"> </span>string,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">visited</span>:<span style="color: #BBB"> </span>table)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">string</span>
+</code></pre></div>
+<p>Pretty-prints an object for debugging or visualization.</p>
+<p>@<em>param</em> <code>obj</code> — The object to pretty-print.</p>
+<p>@<em>param</em> <code>indent</code> — The current indentation level (used for recursion).</p>
+<p>@<em>param</em> <code>visited</code> — A table of visited objects to prevent circular references.</p>
+<h3 id="removeactor">removeActor</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">removeActor</span>(<span style="color: #2C2CFF; font-weight: bold">actor</span>:<span style="color: #BBB"> </span>Actor)
+</code></pre></div>
+<p>Removes an actor from the level. Handles updating the component cache and
+ removing the actor from the sparse map. It will also remove the actor from
+ the scheduler if it has a controller.</p>
+<p>@<em>param</em> <code>actor</code> — The actor to remove.</p>
+<h3 id="removecomponent">removeComponent</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">removeComponent</span>(<span style="color: #2C2CFF; font-weight: bold">actor</span>:<span style="color: #BBB"> </span>Actor,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">component</span>:<span style="color: #BBB"> </span>Component)
+</code></pre></div>
+<p>Removes a component from an actor. It handles
+ updating the component cache and the opacity cache.</p>
+<p>@<em>param</em> <code>actor</code> — The actor to remove the component from.</p>
+<p>@<em>param</em> <code>component</code> — The component to remove.</p>
+<h3 id="run">run</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">run</span>()
+</code></pre></div>
+<p>Initializes the level,
+ Update is the main game loop for a level. It's a coroutine that yields
+ back to the main thread when it needs to wait for input from the player.
+ This function is the heart of the game loop.</p>
+<h3 id="scheduler">scheduler</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">Scheduler</span>
+</code></pre></div>
+<p>The main scheduler driving the loop of the game.</p>
+<h3 id="serializationblacklist">serializationBlacklist</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">table</span>
+</code></pre></div>
+<h3 id="serialize">serialize</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #353580; font-weight: bold">function</span><span style="color: #BBB"> </span>Object.<span style="font-weight: bold; font-style: italic">serialize</span>(<span style="color: #2C2CFF; font-weight: bold">object</span>:<span style="color: #BBB"> </span>any)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">table</span>
+</code></pre></div>
+<h3 id="setcell">setCell</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">setCell</span>(<span style="color: #2C2CFF; font-weight: bold">x</span>:<span style="color: #BBB"> </span>number,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">y</span>:<span style="color: #BBB"> </span>number,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">cell</span>:<span style="color: #BBB"> </span>Cell)
+</code></pre></div>
+<p>Sets the cell at the given position to the given cell.</p>
+<p>@<em>param</em> <code>x</code> — The x component of the position to set.</p>
+<p>@<em>param</em> <code>y</code> — The y component of the position to set.</p>
+<p>@<em>param</em> <code>cell</code> — The cell to set.</p>
+<h3 id="sparsemapcallback">sparseMapCallback</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">sparseMapCallback</span>()
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #353580; font-weight: bold">function</span>
+</code></pre></div>
+<h3 id="step">step</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">step</span>()
+</code></pre></div>
+<h3 id="stripname">stripName</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">boolean</span>
+</code></pre></div>
+<h3 id="systemmanager">systemManager</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code><span style="color: #2C2CFF; font-weight: bold">SystemManager</span>
+</code></pre></div>
+<p>A table containing all of the systems active in the level, set in the constructor.</p>
+<h3 id="trigger">trigger</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">trigger</span>(<span style="color: #2C2CFF; font-weight: bold">eventName</span>:<span style="color: #BBB"> </span>any,<span style="color: #BBB"> </span>...<span style="color: #2C2CFF; font-weight: bold">any</span>)
+</code></pre></div>
+<h3 id="updatecaches">updateCaches</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">updateCaches</span>(<span style="color: #2C2CFF; font-weight: bold">x</span>:<span style="color: #BBB"> </span>any,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">y</span>:<span style="color: #BBB"> </span>any)
+</code></pre></div>
+<h3 id="updateopacitycache">updateOpacityCache</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">updateOpacityCache</span>(<span style="color: #2C2CFF; font-weight: bold">x</span>:<span style="color: #BBB"> </span>number,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">y</span>:<span style="color: #BBB"> </span>number)
+</code></pre></div>
+<p>Updates the opacity cache at the given position. This should be called
+ whenever an actor moves or a cell's opacity changes. This is handled
+ automatically by the Level class.</p>
+<p>@<em>param</em> <code>x</code> — The x component of the position to update.</p>
+<p>@<em>param</em> <code>y</code> — The y component of the position to update.</p>
+<h3 id="updatepassabilitycache">updatePassabilityCache</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">updatePassabilityCache</span>(<span style="color: #2C2CFF; font-weight: bold">x</span>:<span style="color: #BBB"> </span>number,<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">y</span>:<span style="color: #BBB"> </span>number)
+</code></pre></div>
+<p>Updates the passability cache at the given position. This should be called
+ whenever an actor moves or a cell's passability changes. This is handled
+ automatically by the Level class.</p>
+<p>@<em>param</em> <code>x</code> — The x component of the position to update.</p>
+<p>@<em>param</em> <code>y</code> — The y component of the position to update.</p>
+<h3 id="yield">yield</h3>
+<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%;"><span></span><code>(<span style="color: #2C2CFF; font-weight: bold">method</span>)<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Level</span>:<span style="font-weight: bold; font-style: italic">yield</span>(<span style="color: #2C2CFF; font-weight: bold">message</span>:<span style="color: #BBB"> </span>Message)
+<span style="color: #BBB">  </span>-&gt;<span style="color: #BBB"> </span><span style="color: #2C2CFF; font-weight: bold">Decision</span>|<span style="color: #2C2CFF; font-weight: bold">nil</span>
+</code></pre></div>
+<p>Yields to the main 'thread', a coroutine in this case. This is called in run, and a few systems. Any time you want
+ the interface to update you should call this. Avoid calling coroutine.yield directly,
+ as this function will call the onYield method on all systems.</p>
+<hr />
+</section>
+
+            </main>
+        </div>
+        <hr><footer>
+    <div class="terminal-mkdocs-footer-grid">
+        <div id="terminal-mkdocs-footer-copyright-info">
+             Site built with <a href="http://www.mkdocs.org">MkDocs</a> and <a href="https://github.com/ntno/mkdocs-terminal">Terminal for MkDocs</a>.
+        </div>
+    </div>
+</footer>
+    </div>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="alertdialog" aria-modal="true" aria-labelledby="searchModalLabel">
+    <div class="modal-dialog modal-lg" role="search">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="searchModalLabel">Search</h5>
+                <button type="button" class="close btn btn-default btn-ghost" data-dismiss="modal"><span aria-hidden="true">x</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p id="searchInputLabel">Type to start searching</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" aria-labelledby="searchInputLabel" placeholder="" id="mkdocs-search-query" title="Please enter search terms here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No document matches found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+</body>
+
+</html>
